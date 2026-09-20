@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Navbar } from '@/components/navbar';
-import { ThemeProvider } from '@/components/theme-provider';
+import { Navbar } from '@/components/layout/navbar';
+import { ThemeProvider } from '@/providers';
 import { fontVariables } from '@/lib/fonts';
 import '@/app/globals.css';
 
