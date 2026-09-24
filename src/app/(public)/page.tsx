@@ -4,14 +4,14 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="flex min-h-[50vh] flex-col items-start justify-center gap-4 pt-8">
         <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-muted/50 px-3.5 py-1 text-xs text-muted-foreground">
-          <span>✨ Full Stack Web Developer &amp; UI Enthusiast</span>
+          <span>Land, plots, and flats — buy &amp; sell</span>
         </div>
         <h1 className="font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl">
-          Building thoughtful digital experiences.
+          Find or sell property with Nazrul City.
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Hello! I&apos;m Jakirul Islam Hakim. Welcome to my portfolio. স্বাগতম — English uses Inter
-          &amp; Manrope; Bangla automatically falls back to Hind Siliguri.
+          Welcome to Nazrul City. স্বাগতম. We buy and sell land, plots, and flats (units) with clear
+          terms and a straightforward process.
         </p>
       </section>
 
@@ -20,49 +20,48 @@ export default function HomePage() {
         id="about"
         className="flex min-h-[380px] scroll-mt-24 flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs sm:p-12"
       >
-        <h2 className="font-heading text-3xl font-bold tracking-tight">About Me</h2>
+        <h2 className="font-heading text-3xl font-bold tracking-tight">About Nazrul City</h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          I am a passionate software developer specializing in building modern, fast, and scalable
-          web applications. My focus is on clean architecture, user-centric design, and smooth
-          micro-interactions.
+          Nazrul City is a real estate business. We help buyers and sellers complete deals on land,
+          residential plots, and apartment flats or units. Our focus is honest pricing, verified
+          papers, and a deal you can follow from first visit to handover.
         </p>
       </section>
 
-      {/* Skills Section */}
+      {/* Services Section */}
       <section
-        id="skills"
+        id="services"
         className="flex min-h-[380px] scroll-mt-24 flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs sm:p-12"
       >
-        <h2 className="font-heading text-3xl font-bold tracking-tight">
-          Skills &amp; Technologies
-        </h2>
+        <h2 className="font-heading text-3xl font-bold tracking-tight">What we buy &amp; sell</h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Next.js, React, TypeScript, Tailwind CSS, Node.js, and modern UI component libraries.
-          Constantly refining development workflows with strict type safety and automated testing.
+          Land for development or holding, plotted land for homes, and ready or upcoming flats and
+          units. Tell us what you need — we match buyers and sellers and handle the transaction
+          steps with you.
         </p>
       </section>
 
-      {/* Projects Section */}
+      {/* Listings Section */}
       <section
-        id="projects"
+        id="listings"
         className="flex min-h-[380px] scroll-mt-24 flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs sm:p-12"
       >
-        <h2 className="font-heading text-3xl font-bold tracking-tight">Featured Projects</h2>
+        <h2 className="font-heading text-3xl font-bold tracking-tight">Current listings</h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          A showcase of recent web applications, design systems, and developer tools created with
-          React and Next.js.
+          Featured land, plots, and flats will appear here. If you want to list a property or see
+          what is available now, use the contact section and we will share matching options.
         </p>
       </section>
 
-      {/* Experience Section */}
+      {/* How we work Section */}
       <section
-        id="experience"
+        id="how-we-work"
         className="flex min-h-[380px] scroll-mt-24 flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs sm:p-12"
       >
-        <h2 className="font-heading text-3xl font-bold tracking-tight">Work Experience</h2>
+        <h2 className="font-heading text-3xl font-bold tracking-tight">How we work</h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Detailed career history, key projects delivered, and technical contributions across
-          engineering teams.
+          Share what you want to buy or sell. We review the property and papers, agree terms, and
+          walk you through payment and transfer until the deal is complete.
         </p>
       </section>
 
@@ -71,10 +70,10 @@ export default function HomePage() {
         id="contact"
         className="mb-24 flex min-h-[380px] scroll-mt-24 flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs sm:p-12"
       >
-        <h2 className="font-heading text-3xl font-bold tracking-tight">Get In Touch</h2>
+        <h2 className="font-heading text-3xl font-bold tracking-tight">Get in touch</h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Have an exciting project in mind or looking for a dedicated developer? Feel free to send a
-          message or connect through social links.
+          Buying land, a plot, or a flat — or ready to sell? Send a message and we will follow up
+          with next steps.
         </p>
       </section>
     </div>

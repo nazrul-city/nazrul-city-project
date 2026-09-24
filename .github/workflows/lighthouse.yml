@@ -43,7 +43,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build production bundle
-        run: pnpm build
+        run: pnpm build --webpack
 
       - name: Start server in background
         run: pnpm start &
