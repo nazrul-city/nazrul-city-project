@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Thank you for your interest in contributing to this portfolio! To maintain code quality and ensure a smooth review process, please follow these guidelines.
+Thank you for your interest in contributing to Nazrul City! To maintain code quality and ensure a smooth review process, please follow these guidelines.
 
 ---
 
@@ -20,7 +20,7 @@ Before getting started, ensure you have the following installed locally:
 
 ```bash
 # Fork the repository on GitHub, then clone your fork:
-git clone https://github.com/jakirulislamhakim/latest-portfolio.git
+git clone https://github.com/nazrul-city/nazrul-city-project.git
 cd latest-portfolio
 pnpm install
 ```
@@ -70,7 +70,7 @@ pnpm build         # Production Next.js build verification
 Commit messages must strictly follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
 
 ```bash
-git commit -m "feat: add animated skill tags component"
+git commit -m "feat: add property listing card component"
 git commit -m "fix: resolve navigation drawer scroll lock on mobile"
 ```
 
@@ -125,4 +125,4 @@ When opening a Pull Request:
 If you have questions, encounter a bug, or want to discuss an idea:
 
 - Open an issue on GitHub.
-- Reach out via email: [jakirulislamhakim@gmail.com](mailto:jakirulislamhakim@gmail.com)
+- Reach out via email: [grihiniworld@gmail.com](mailto:grihiniworld@gmail.com)

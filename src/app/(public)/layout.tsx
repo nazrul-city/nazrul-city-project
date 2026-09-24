@@ -5,8 +5,12 @@ import { fontVariables } from '@/lib/fonts';
 import '@/app/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Jakirul Islam Hakim | Portfolio',
-  description: 'Personal portfolio of Jakirul Islam Hakim - Full Stack Web Developer',
+  title: {
+    default: 'Nazrul City | Buy & Sell Land, Plots & Flats',
+    template: '%s | Nazrul City',
+  },
+  description:
+    'Nazrul City is a real estate business. We buy and sell land, plots, and flats/units with clear, straightforward deals.',
 };
 
 export default function RootLayout({

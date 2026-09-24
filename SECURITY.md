@@ -22,7 +22,7 @@ We take the security of this project and its infrastructure seriously. If you di
 1. **GitHub Private Vulnerability Advisory (Recommended)**:
    Navigate to the repository's **Security** tab → **Advisories** → **Report a vulnerability**.
 2. **Direct Email**:
-   Send details directly to: [jakirulislamhakim@gmail.com](mailto:jakirulislamhakim@gmail.com)
+   Send details directly to: [grihiniworld@gmail.com](mailto:grihiniworld@gmail.com)
 
 ### Please Include:
 
