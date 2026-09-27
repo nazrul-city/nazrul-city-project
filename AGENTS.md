@@ -58,20 +58,17 @@ If a skill conflicts with this file, this file wins. A skill never overrides the
 
 ---
 
-## 3. Verification Workflow (After Every Code Change)
+## 3. Verification Workflow (After Completing a Task)
 
-After changing code, run these in order without asking:
+Only after completing a task or feature, run these verification commands in order without asking:
 
-1. `pnpm lint`
-2. `pnpm format:check`
-3. `pnpm typecheck`
-4. `pnpm build`
+1. `pnpm typecheck`
+2. `pnpm build`
 
 Rules:
 
-- If a step fails, fix the **root cause**, then **restart from step 1**. A fix can break an earlier step.
-- Fix lint errors by editing the code, or with `pnpm exec eslint --fix <changed files>`.
-- If `format:check` fails, run `pnpm exec prettier --write <changed files>`. Do **not** run `pnpm format` on the whole project. It creates unrelated diffs.
+- Do not run lint, format, or typecheck after every small code edit; only run `pnpm typecheck` and `pnpm build` after completing the task.
+- If a step fails, fix the **root cause**, then re-verify.
 - Never silence a failure with `any`, `as`, `@ts-ignore`, or `eslint-disable`.
 - Finish with a short report: what ran and whether it passed.
 
@@ -213,7 +210,7 @@ If existing features use a different layout, **copy the existing one**.
 
 ### 10.1 Basics
 
-- **Mobile-first.** Write base styles for small screens, then scale up with `sm:`, `md:`, `lg:`.
+- **Mobile-first.** Write base styles for small screens, then scale up with `md:`, `lg:`. Always follow the hierarchy: **No prefix (Mobile) → `md:` (Tablet) → `lg:` (Desktop)**. Avoid using `sm:` unless explicitly necessary for an edge-case screen size.
 - **Never use inline styles** (`style={{ ... }}`) and **never use `!important`**.
 - Use `cn()` (built on `clsx` + `tailwind-merge`) for conditional and merged classes. Find the existing helper in `src/lib` or `src/utils`. Do not recreate it.
 - Use `class-variance-authority` for components with variants.
@@ -241,6 +238,8 @@ Every reusable design value is defined **once**, in **one central place**, and u
 ### 10.3 Token rules
 
 - **Read first.** Before styling, read `src/app/globals.css` and the existing `components/ui`. Follow the structure already there. Do not restructure `globals.css` without asking.
+- **Headings (`h1`–`h6`) are controlled from `globals.css`.** Heading font sizes, line heights, font families, and fluid `clamp()` scales are managed centrally in `src/app/globals.css` (`:root` `--heading-1` through `--heading-6` and `@layer base`). **Never override heading font-sizes with ad-hoc classes** (like `text-3xl`, `text-5xl`, `md:text-6xl`) inside component JSX. If a heading scale needs to change, modify the central `--heading-*` variable in `globals.css`.
+- **Shadows are managed in `globals.css`.** Use semantic shadow tokens (`shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`, `shadow-2xl`) defined by the design system. **Never use arbitrary shadow values** (e.g. `shadow-[0_4px_20px_rgba(0,0,0,0.1)]`). If a custom shadow elevation is needed, define it centrally in `globals.css`.
 - **Semantic names, no raw or arbitrary values.** Use `primary`, `surface`, `muted`, `destructive`, never `bg-blue-500`, `text-[#333]`, `rounded-[10px]`, or `p-[13px]`. If no token fits, add one, then use it. (Structural layout values like `grid-cols-[1fr_auto]` are fine.)
 - **Every color token has a light and a dark value.** Components must never need `dark:` overrides with raw colors. Follow the existing `next-themes` setup.
 - **Adding or changing a token is a global change.** In your reply, explain why the new token is needed, why existing ones do not fit, and what it affects. Never rename or delete a token without asking.
