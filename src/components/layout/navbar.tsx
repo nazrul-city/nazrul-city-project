@@ -52,7 +52,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-border/50 bg-background/50 backdrop-blur-md">
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link
@@ -79,15 +79,14 @@ export function Navbar() {
             />
           </span>
           <div className="flex flex-col">
-            <span className="font-heading text-sm font-semibold tracking-tight text-foreground sm:text-base">
+            <span className="font-heading text-sm font-bold tracking-tight text-foreground sm:text-base">
               Nazrul City
             </span>
-            <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              <span>Land, plots &amp; flats</span>
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-primary/90">
+              {/* <span>Find Your Dream Land</span> */}
+              {/* <span>আমাদের সিটি, শান্তির গাঠি</span> */}
+              {/* <span>আজই খুঁজে নিন আপনার স্বপ্নের সম্পত্তি!</span> */}
+              <span>আমাদের সিটি, শান্তির ঘাঁটি</span>
             </div>
           </div>
         </Link>
@@ -132,7 +131,7 @@ export function Navbar() {
           <Link
             href="#contact"
             onClick={() => handleLinkClick('#contact')}
-            className={cn(buttonVariants({ size: 'sm' }), 'hidden gap-1.5 sm:inline-flex')}
+            className={cn(buttonVariants({ size: 'sm' }), 'hidden h-9 gap-1.5 sm:inline-flex')}
           >
             <span>Contact us</span>
             <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -153,7 +152,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border/50 bg-background/95 backdrop-blur-md md:hidden">
+        <div className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-border/50 bg-background/95 shadow-2xl backdrop-blur-xl md:hidden">
           <div className="mx-auto flex max-w-md flex-col gap-4 p-6">
             <nav className="flex flex-col gap-1" aria-label="Mobile Navigation">
               {NAV_ITEMS.map((item) => {
