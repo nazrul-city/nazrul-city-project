@@ -10,3 +10,5 @@ export {
   type THeroStatsProps,
   type THeroStatItem,
 } from './components/hero-section/hero-stats';
+
+export { PartnersSection } from './components/partners-section/partners-section';

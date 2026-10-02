@@ -34,7 +34,7 @@ const DEFAULT_PROPERTY_CARD: THeroPropertyCard = {
 };
 
 export function HeroSection({
-  backgroundImageSrc = '/images/landing-page/h4.jpeg',
+  backgroundImageSrc = '/images/landing-page/hero-bg.jpeg',
   eyebrow = 'Land, Plots, Ready & Unready Flats',
   //   title = 'Find or sell property with Nazrul City.',
   //   title = 'Find a place that feels like home.',
