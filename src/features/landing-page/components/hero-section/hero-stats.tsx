@@ -52,25 +52,22 @@ export function HeroStats({ stats = DEFAULT_HERO_STATS, className }: Readonly<TH
               <div
                 key={stat.id}
                 className={cn(
-                  'flex items-center gap-3 md:gap-3.5',
+                  'grid grid-cols-[auto_minmax(0,1fr)] grid-rows-2 items-center gap-x-3 md:gap-x-4',
                   index > 0 && 'md:pl-6 lg:pl-8',
                   index < stats.length - 1 && 'md:pr-6 lg:pr-8'
                 )}
               >
-                <div
-                  className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary md:size-11"
-                  aria-hidden="true"
-                >
-                  <Icon className="size-5" />
-                </div>
-                <div className="flex min-w-0 flex-col">
-                  <dd className="font-heading text-xl font-extrabold tracking-tight text-foreground md:text-2xl lg:text-3xl">
-                    {stat.value}
-                  </dd>
-                  <dt className="truncate text-xs font-medium text-muted-foreground md:text-sm">
-                    {stat.label}
-                  </dt>
-                </div>
+                <dt className="col-start-2 row-start-2 truncate text-xs font-medium text-muted-foreground md:text-sm">
+                  {stat.label}
+                </dt>
+                <dd aria-hidden="true" className="col-start-1 row-span-2 row-start-1 self-center">
+                  <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary md:size-11">
+                    <Icon className="size-5" />
+                  </span>
+                </dd>
+                <dd className="col-start-2 row-start-1 font-heading text-xl font-extrabold tracking-tight text-foreground md:text-2xl lg:text-3xl">
+                  {stat.value}
+                </dd>
               </div>
             );
           })}

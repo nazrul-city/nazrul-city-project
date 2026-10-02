@@ -74,7 +74,7 @@ export function Footer({ className }: Readonly<TFooterProps>) {
                 <span className="font-heading text-base font-bold tracking-tight text-foreground">
                   {SITE_CONFIG.name}
                 </span>
-                <span className="text-xs font-semibold text-primary/90">{SITE_CONFIG.tagline}</span>
+                <span className="text-xs font-semibold text-foreground">{SITE_CONFIG.tagline}</span>
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">

@@ -70,7 +70,7 @@ export function Navbar() {
             <span className="font-heading text-sm font-bold tracking-tight text-foreground md:text-base">
               Nazrul City
             </span>
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-primary/90">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
               <span>আমাদের সিটি, শান্তির ঘাঁটি</span>
             </div>
           </div>
