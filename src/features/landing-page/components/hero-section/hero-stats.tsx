@@ -41,7 +41,7 @@ export const DEFAULT_HERO_STATS: readonly THeroStatItem[] = [
   },
 ] as const;
 
-export function HeroStats({ stats = DEFAULT_HERO_STATS, className }: THeroStatsProps) {
+export function HeroStats({ stats = DEFAULT_HERO_STATS, className }: Readonly<THeroStatsProps>) {
   return (
     <aside aria-label="Company Statistics" className={cn('w-full', className)}>
       <div className="rounded-2xl border border-border/80 bg-card/95 p-4 shadow-xl backdrop-blur-md md:p-6 lg:p-7 dark:bg-card/90">

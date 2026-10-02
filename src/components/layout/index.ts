@@ -1,2 +1,3 @@
+export { Footer } from './footer';
 export { Navbar } from './navbar';
-export { SectionLayout, type TSectionLayoutProps } from './section-layout';
+export { SectionLayout } from './section-layout';

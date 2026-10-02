@@ -14,7 +14,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Act as a **senior software architect**: keep solutions simple, maintainable, and consistent with the existing project.
 - The owner is a **learner**. For every non-obvious decision (library/API choice, pattern, file placement, design choice), explain **why** in your reply. Be short and concrete, define unfamiliar terms, and mention the trade-off.
-- Reply in **English**.
+- Reply in simple plain **English**.
 - If a requirement is ambiguous, ask before coding. Do not guess.
 - Before creating anything new (component, hook, util, type, token), search the project for an existing one and reuse it.
 - Follow the existing architecture and naming. Do not introduce new patterns without asking.
@@ -162,6 +162,7 @@ If existing features use a different layout, **copy the existing one**.
 ### Components
 
 - Components are **small and single-purpose**. Separate concerns: no god components.
+- **Props are always read-only.** Type every component's props parameter as `Readonly<T{ComponentName}Props>`. Do not assign to a prop or mutate a prop object inside the component. Props belong to the parent.
 - **Separate logic from UI.** Data fetching, state calculation, and business logic go in custom hooks (`useAuth`, `useCart`). Components stay thin and render structure only.
 - **Composition over configuration.** Do not build one component with 20 conditional props. Split into smaller components and use `children`.
 - Keep state as **local as possible**. Do not lift it to a parent or global context if only one child needs it.
@@ -201,7 +202,7 @@ If existing features use a different layout, **copy the existing one**.
 ### Type naming
 
 - Types use the **`T` prefix**: `TCar`, `TUser`, `TProjectCardProps`.
-- Component props: `T{ComponentName}Props`.
+- Component props: `T{ComponentName}Props`, used as `Readonly<T{ComponentName}Props>` on the component parameter.
 - If an `interface` is unavoidable, use the **`I` prefix**: `IThemeContract`.
 
 ---

@@ -2,24 +2,28 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
+import { buttonVariants } from '@/components/ui/button';
+import { fontVariables } from '@/lib/fonts';
+import { cn } from '@/lib/utils';
+import '@/app/globals.css';
 
 export default function GlobalError({
   error,
   reset,
-}: {
+}: Readonly<{
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}>) {
   useEffect(() => {
     // Forward unhandled root-level error to Sentry
     Sentry.captureException(error);
   }, [error]);
 
   return (
-    <html lang="en">
-      <body className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-4 text-zinc-100 antialiased">
+    <html lang="en" className={`${fontVariables} h-full antialiased`}>
+      <body className="flex min-h-full flex-col items-center justify-center bg-background px-4 text-foreground">
         <main className="flex max-w-md flex-col items-center text-center">
-          <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-red-500/20 bg-red-500/10 text-red-400">
+          <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/10 text-destructive">
             <svg
               className="size-7"
               fill="none"
@@ -35,21 +39,15 @@ export default function GlobalError({
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl">
-            Critical application error
-          </h1>
-          <p className="mt-2 text-sm text-zinc-400">
+          <h1>Critical application error</h1>
+          <p className="mt-2 text-muted-foreground">
             An unexpected error occurred. Our engineering team has been automatically notified via
             Sentry.
           </p>
           {error.digest && (
-            <p className="mt-2 font-mono text-xs text-zinc-500">Error Digest: {error.digest}</p>
+            <p className="mt-2 text-xs text-muted-foreground">Error Digest: {error.digest}</p>
           )}
-          <button
-            type="button"
-            onClick={() => reset()}
-            className="mt-6 rounded-lg bg-zinc-100 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
-          >
+          <button type="button" onClick={() => reset()} className={cn(buttonVariants(), 'mt-6')}>
             Try again
           </button>
         </main>

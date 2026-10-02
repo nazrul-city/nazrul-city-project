@@ -54,7 +54,7 @@ export default function HomePage() {
       </SectionLayout>
 
       {/* Contact Section */}
-      <SectionLayout id="contact" className="pb-24">
+      <SectionLayout id="contact">
         <div className="flex min-h-[320px] flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs md:p-12">
           <h2 className="font-heading text-3xl font-bold tracking-tight">Get in touch</h2>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
