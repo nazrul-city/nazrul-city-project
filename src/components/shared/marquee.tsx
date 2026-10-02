@@ -72,7 +72,7 @@ export function Marquee({
   pauseOnHover = true,
   repeat = 4,
   className,
-}: TMarqueeProps) {
+}: Readonly<TMarqueeProps>) {
   const copy1Ref = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -141,8 +141,7 @@ export function Marquee({
         className={cn(
           'flex w-max',
           direction === 'ltr' ? 'animate-marquee-reverse' : 'animate-marquee',
-          pauseOnHover &&
-            'group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]'
+          pauseOnHover && 'group-hover:paused hover:paused'
         )}
         style={
           initialDuration ? ({ animationDuration: initialDuration } as CSSProperties) : undefined

@@ -5,21 +5,9 @@ import Link from 'next/link';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
+import { PUBLIC_NAV_ITEMS } from '@/config/site';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-
-interface NavItem {
-  label: string;
-  href: string;
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'How we work', href: '#how-we-work' },
-  { label: 'Contact', href: '#contact' },
-];
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,7 +26,7 @@ export function Navbar() {
       { rootMargin: '-20% 0px -70% 0px' }
     );
 
-    NAV_ITEMS.forEach(({ href }) => {
+    PUBLIC_NAV_ITEMS.forEach(({ href }) => {
       const el = document.querySelector(href);
       if (el) observer.observe(el);
     });
@@ -53,7 +41,7 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-border/50 bg-background/50 backdrop-blur-md">
-      <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 md:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link
           href="/"
@@ -79,21 +67,18 @@ export function Navbar() {
             />
           </span>
           <div className="flex flex-col">
-            <span className="font-heading text-sm font-bold tracking-tight text-foreground sm:text-base">
+            <span className="font-heading text-sm font-bold tracking-tight text-foreground md:text-base">
               Nazrul City
             </span>
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-primary/90">
-              {/* <span>Find Your Dream Land</span> */}
-              {/* <span>আমাদের সিটি, শান্তির গাঠি</span> */}
-              {/* <span>আজই খুঁজে নিন আপনার স্বপ্নের সম্পত্তি!</span> */}
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
               <span>আমাদের সিটি, শান্তির ঘাঁটি</span>
             </div>
           </div>
         </Link>
 
         {/* Desktop Navigation Links with Underline */}
-        <nav className="hidden items-center gap-1 sm:gap-2 md:flex" aria-label="Main Navigation">
-          {NAV_ITEMS.map((item) => {
+        <nav className="hidden items-center gap-2 md:flex" aria-label="Main Navigation">
+          {PUBLIC_NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.href;
             return (
               <Link
@@ -105,7 +90,7 @@ export function Navbar() {
                   'group relative px-3.5 py-2 text-sm font-medium transition-colors duration-200',
                   isActive
                     ? 'font-semibold text-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
+                    : 'text-muted-foreground hover:text-accent-foreground'
                 )}
               >
                 <span>{item.label}</span>
@@ -125,13 +110,13 @@ export function Navbar() {
         </nav>
 
         {/* Desktop CTA, Theme Toggle & Mobile Button */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <ThemeToggle />
 
           <Link
             href="#contact"
             onClick={() => handleLinkClick('#contact')}
-            className={cn(buttonVariants({ size: 'sm' }), 'hidden h-9 gap-1.5 sm:inline-flex')}
+            className={cn(buttonVariants({ size: 'sm' }), 'hidden gap-1.5 md:inline-flex')}
           >
             <span>Contact us</span>
             <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -155,7 +140,7 @@ export function Navbar() {
         <div className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-border/50 bg-background/95 shadow-2xl backdrop-blur-xl md:hidden">
           <div className="mx-auto flex max-w-md flex-col gap-4 p-6">
             <nav className="flex flex-col gap-1" aria-label="Mobile Navigation">
-              {NAV_ITEMS.map((item) => {
+              {PUBLIC_NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.href;
                 return (
                   <Link

@@ -98,8 +98,8 @@ export function HeroSection({
             {eyebrow && (
               <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/80 px-3.5 py-1 text-xs font-medium text-foreground shadow-xs backdrop-blur-md">
                 <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-secondary" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-primary/70" />
                 </span>
                 <span>{eyebrow}</span>
               </div>
@@ -125,8 +125,10 @@ export function HeroSection({
               <Link
                 href={ctaHref}
                 className={cn(
-                  buttonVariants({ size: 'sm' }),
-                  'group h-11 gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-md transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] md:h-13 md:gap-2 md:rounded-xl md:px-6 md:text-base md:shadow-lg'
+                  buttonVariants({
+                    className:
+                      'group h-11 gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-md transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] md:h-13 md:gap-2 md:rounded-xl md:px-6 md:text-base md:shadow-lg',
+                  })
                 )}
               >
                 <span>{ctaText}</span>

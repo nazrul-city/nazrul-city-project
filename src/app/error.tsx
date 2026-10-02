@@ -2,14 +2,16 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function RouteError({
   error,
   reset,
-}: {
+}: Readonly<{
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}>) {
   useEffect(() => {
     // Log route-level error to Sentry
     Sentry.captureException(error);
@@ -17,7 +19,7 @@ export default function RouteError({
 
   return (
     <section className="flex flex-1 flex-col items-center justify-center px-4 py-16 text-center">
-      <div className="mb-4 flex size-12 items-center justify-center rounded-xl border border-red-500/20 bg-red-500/10 text-red-400">
+      <div className="mb-4 flex size-12 items-center justify-center rounded-xl border border-destructive/20 bg-destructive/10 text-destructive">
         <svg
           className="size-6"
           fill="none"
@@ -33,22 +35,12 @@ export default function RouteError({
           />
         </svg>
       </div>
-      <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl dark:text-zinc-100">
-        Something went wrong
-      </h2>
-      <p className="mt-2 max-w-sm text-sm text-zinc-600 dark:text-zinc-400">
+      <h2>Something went wrong</h2>
+      <p className="mt-2 max-w-sm text-muted-foreground">
         We encountered an error loading this section. The issue has been recorded.
       </p>
-      {error.digest && (
-        <p className="mt-2 font-mono text-xs text-zinc-400 dark:text-zinc-500">
-          Digest: {error.digest}
-        </p>
-      )}
-      <button
-        type="button"
-        onClick={() => reset()}
-        className="mt-5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-      >
+      {error.digest && <p className="mt-2 text-xs text-muted-foreground">Digest: {error.digest}</p>}
+      <button type="button" onClick={() => reset()} className={cn(buttonVariants(), 'mt-5')}>
         Try again
       </button>
     </section>

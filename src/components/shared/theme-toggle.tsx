@@ -6,10 +6,9 @@ import { cn } from '@/lib/utils';
 
 interface ThemeToggleProps {
   className?: string;
-  showLabel?: boolean;
 }
 
-export function ThemeToggle({ className, showLabel = false }: ThemeToggleProps) {
+export function ThemeToggle({ className }: Readonly<ThemeToggleProps>) {
   const { setTheme, resolvedTheme } = useTheme();
 
   return (
@@ -24,16 +23,26 @@ export function ThemeToggle({ className, showLabel = false }: ThemeToggleProps) 
       )}
     >
       {/* Sun icon for Light Mode */}
-      <Sun className="size-4 scale-100 rotate-0 text-amber-500 transition-all duration-300 group-hover:text-amber-600 dark:scale-0 dark:-rotate-90" />
+      <Sun
+        aria-hidden
+        className={cn(
+          'size-4 scale-100 rotate-0 transition-all duration-300 group-hover:text-primary dark:scale-0 dark:-rotate-90',
+          'text-primary'
+        )}
+        color="currentColor"
+        focusable="false"
+      />
 
       {/* Moon icon for Dark Mode */}
-      <Moon className="absolute size-4 scale-0 rotate-90 text-sky-400 transition-all duration-300 group-hover:text-sky-300 dark:scale-100 dark:rotate-0" />
-
-      {showLabel && (
-        <span className="ml-2 text-sm font-medium capitalize">
-          {resolvedTheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-        </span>
-      )}
+      <Moon
+        aria-hidden
+        className={cn(
+          'absolute size-4 scale-0 rotate-90 transition-all duration-300 group-hover:text-primary dark:scale-100 dark:rotate-0',
+          'text-primary'
+        )}
+        color="currentColor"
+        focusable="false"
+      />
       <span className="sr-only">Toggle theme</span>
     </button>
   );
