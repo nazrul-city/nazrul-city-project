@@ -12,3 +12,5 @@ export {
 } from './components/hero-section/hero-stats';
 
 export { PartnersSection } from './components/partners-section/partners-section';
+
+export { FaqSection } from './components/faq-section/faq-section';

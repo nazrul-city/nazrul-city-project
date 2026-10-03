@@ -1,11 +1,13 @@
 import { SectionLayout } from '@/components/layout';
-import { HeroSection, PartnersSection } from '@/features/landing-page';
+import { FaqSection, HeroSection, PartnersSection } from '@/features/landing-page';
 
 export default function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section (Full-Bleed) */}
       <HeroSection />
+
+      <FaqSection />
 
       <PartnersSection />
 
