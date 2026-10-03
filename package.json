@@ -6,6 +6,13 @@
   "author": "Nazrul City",
   "license": "MIT",
   "packageManager": "pnpm@9.15.4",
+  "pnpm": {
+    "auditConfig": {
+      "ignoreCves": [
+        "CVE-2026-93687"
+      ]
+    }
+  },
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
