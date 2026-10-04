@@ -10,7 +10,7 @@ const CONTACT_PHONE = SITE_CONFIG.contact.phones[0];
 
 export function HowWeWorkSection() {
   return (
-    <SectionLayout id="how-we-work" aria-labelledby="how-we-work-heading">
+    <SectionLayout id="how-we-work" aria-labelledby="how-we-work-heading" needTopPadding>
       <div className="mx-auto max-w-3xl">
         <h2 id="how-we-work-heading" className="text-center text-balance">
           নজরুল সিটি কিভাবে কাজ করে ?
