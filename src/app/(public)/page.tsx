@@ -1,11 +1,18 @@
 import { SectionLayout } from '@/components/layout';
-import { FaqSection, HeroSection, PartnersSection } from '@/features/landing-page';
+import {
+  FaqSection,
+  HeroSection,
+  HowWeWorkSection,
+  PartnersSection,
+} from '@/features/landing-page';
 
 export default function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section (Full-Bleed) */}
       <HeroSection />
+
+      <HowWeWorkSection />
 
       <FaqSection />
 
@@ -42,17 +49,6 @@ export default function HomePage() {
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
             Featured land, plots, and flats will appear here. If you want to list a property or see
             what is available now, use the contact section and we will share matching options.
-          </p>
-        </div>
-      </SectionLayout>
-
-      {/* How we work Section */}
-      <SectionLayout id="how-we-work">
-        <div className="flex min-h-[320px] flex-col justify-center rounded-2xl border border-border/50 bg-card p-8 shadow-xs md:p-12">
-          <h2 className="font-heading text-3xl font-bold tracking-tight">How we work</h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Share what you want to buy or sell. We review the property and papers, agree terms, and
-            walk you through payment and transfer until the deal is complete.
           </p>
         </div>
       </SectionLayout>

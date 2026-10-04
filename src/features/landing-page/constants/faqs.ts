@@ -1,3 +1,5 @@
+import { SITE_CONFIG } from '@/config/site';
+
 export type TFaqCategory = 'land' | 'flat';
 
 export type TFaqItem = {
@@ -11,6 +13,8 @@ export type TFaqGroup = {
   label: string;
   items: readonly TFaqItem[];
 };
+
+const CONTACT_PHONE = SITE_CONFIG.contact.phones[0];
 
 export const FAQ_GROUPS = [
   {
@@ -42,7 +46,7 @@ export const FAQ_GROUPS = [
       {
         id: 'land-call',
         question: 'আরও জানতে চাইলে কীভাবে যোগাযোগ করবেন?',
-        answer: 'জমি সম্পর্কে আরও কোনো প্রশ্ন থাকলে সরাসরি 01837777777 নম্বরে কল করুন।',
+        answer: `জমি সম্পর্কে আরও কোনো প্রশ্ন থাকলে সরাসরি ${CONTACT_PHONE} নম্বরে কল করুন।`,
       },
     ],
   },
@@ -74,7 +78,7 @@ export const FAQ_GROUPS = [
       {
         id: 'flat-call',
         question: 'আরও জানতে চাইলে কীভাবে যোগাযোগ করবেন?',
-        answer: 'ফ্ল্যাট সম্পর্কে আরও কোনো প্রশ্ন থাকলে সরাসরি 01837777777 নম্বরে কল করুন।',
+        answer: `ফ্ল্যাট সম্পর্কে আরও কোনো প্রশ্ন থাকলে সরাসরি ${CONTACT_PHONE} নম্বরে কল করুন।`,
       },
     ],
   },

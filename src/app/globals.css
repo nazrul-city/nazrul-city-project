@@ -4,6 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* hover: only on a mouse. A phone tap should not get stuck on the hover color. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -202,8 +211,12 @@
   }
   button,
   a,
+  summary,
+  label,
   [role='button'] {
-    touch-action: manipulation; /* double-tap wait বন্ধ */
+    /* A phone waits on the first tap when it is still listening for a double-tap zoom. */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   html {
     @apply font-sans;
@@ -243,6 +256,25 @@
   h6 {
     font-size: var(--heading-6);
     line-height: 1.4;
+  }
+}
+
+/*
+  A finger is not a mouse. Hover color changes and smooth scrolling make a tap
+  feel late. On a phone or tablet, the action and the jump happen immediately.
+  This sits outside @layer so it wins over Tailwind hover and scroll utilities.
+*/
+@media (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  button,
+  a,
+  summary,
+  label,
+  [role='button'] {
+    transition-duration: 0s;
   }
 }
 
