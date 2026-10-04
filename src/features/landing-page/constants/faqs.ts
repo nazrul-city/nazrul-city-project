@@ -19,7 +19,7 @@ const CONTACT_PHONE = SITE_CONFIG.contact.phones[0];
 export const FAQ_GROUPS = [
   {
     id: 'land',
-    label: 'Land',
+    label: 'জমি',
     items: [
       {
         id: 'NC-owner',
@@ -28,20 +28,31 @@ export const FAQ_GROUPS = [
           'নজরুল সিটির মালিক লেঃ কর্ণেল মোঃ নজরুল ইসলাম (অবঃ)। তিনি এই প্রতিষ্ঠানের একক মালিকানায় রয়েছেন। ক্রয় সূত্রে, বায়না সূত্রে, ওয়ারিশান সূত্রে।',
       },
       {
-        id: 'land-papers',
-        question: 'How do you check the papers?',
-        answer: 'Deeds and papers are reviewed before terms are agreed.',
+        id: 'land-records',
+        question: 'কাগজপত্র সবকিছু আপডেট রয়েছে কি না?',
+        answer: 'সি এস, আর ও আর, বি আর এস, ই-নামজারি পর্যন্ত আপডেট করা আছে।',
       },
       {
-        id: 'land-process',
-        question: 'How does a land deal move forward?',
+        id: 'land-see-papers',
+        question: 'প্রয়োজনীয় সকল কাগজপত্র জমি ক্রয়ের আগে/ বুকিং করার আগে দেখার সুযোগ আছে কি না?',
         answer:
-          'Share what you want, review the property and papers, agree terms, then payment and transfer through handover.',
+          'বুকিং মানি (যা ফেরত যোগ্য) দেওয়ার মাধমে আমরা কাগজপত্র দিয়ে থাকি। যদি কারো একান্তই কোনো প্লট পছন্দ হয় সেক্ষেত্রে আমরা প্রাথমিক ভাবে আমাদের অফিসে কাগজপত্র দেখাই।',
       },
       {
-        id: 'land-available',
-        question: 'How do I see land that is available now?',
-        answer: 'Ask through the contact section and matching options are shared.',
+        id: 'land-deed-who',
+        question: 'দলিল কে করে দিবেন?',
+        answer: 'দলিল জমির মালিক নিজে করে দিবেন।',
+      },
+      {
+        id: 'land-road',
+        question: 'আপনাদের জমির রাস্তা আছে কি না? কয় ফুট রাস্তা?',
+        answer: 'প্রশস্ত রাস্তা রয়েছে (১২-২০ ফিট)।',
+      },
+      {
+        id: 'land-design',
+        question: 'নজরুল সিটিতে বাড়ি করার সময় নিজের মতো করে করার সুযোগ আছে কি (প্ল্যান, ডিজাইন)?',
+        answer:
+          'সুযোগ আছে। তবে আমরা সহযোগীতা করতে পারবো যদি আপনি নিতে চান। সূলভ মূল্যের ব্যবস্থা থাকবে।',
       },
       {
         id: 'land-call',
@@ -52,28 +63,34 @@ export const FAQ_GROUPS = [
   },
   {
     id: 'flat',
-    label: 'Flat',
+    label: 'ফ্ল্যাট',
     items: [
       {
         id: 'flat-kinds',
-        question: 'Do you deal in ready and upcoming flats?',
-        answer: 'Yes. Ready flats and upcoming flats or units.',
+        question: 'রেডি ও আসন্ন ফ্ল্যাট বিক্রি হয়?',
+        answer: 'হ্যাঁ। নজরুল সিটি তৈরি ফ্ল্যাট এবং আসন্ন ফ্ল্যাট বা ইউনিট বিক্রি করে।',
       },
       {
-        id: 'flat-before',
-        question: 'What should I know before I choose a flat?',
-        answer: 'Pricing is explained up front, and papers are checked before the deal moves on.',
+        id: 'flat-share',
+        question: 'জমি সহ ফ্ল্যাটের মালিক হওয়া যাবে কি না?',
+        answer: 'জ্বি। শেয়ারিং সিস্টেমে জমি সহ ফ্ল্যাটের মালিক হওয়া যাবে।',
       },
       {
-        id: 'flat-process',
-        question: 'How does buying or selling a flat work?',
+        id: 'flat-build',
+        question: 'ফ্ল্যাটের কাগজপত্র ও নির্মাণ অবকাঠামো সম্পর্কে বর্ণনা করুন।',
         answer:
-          'Same path as land: share the need, review papers, agree terms, then payment and transfer.',
+          'ফ্ল্যাটের সকল কাগজপত্র আপডেট করা এবং মার্কেটের সেরা ব্র্যান্ডের রড, সিমেন্ট ও অন্যান্য সামগ্রী ব্যবহার করে ফ্ল্যাট নির্মাণ হচ্ছে এবং সকল প্রকার অপচয় রোধ করে ২৫-৩০% কম খরচে ফ্ল্যাট নির্মাণের নিশ্চয়তা।',
       },
       {
-        id: 'flat-ask',
-        question: 'How do I ask about a flat?',
-        answer: 'Use the contact section. The follow-up covers next steps.',
+        id: 'flat-deed',
+        question: 'ফ্ল্যাটের দলিল কার নামে হয়?',
+        answer:
+          'সাফ কবলা আপনার নামে সাব-রেজিস্ট্রি অফিসে রেজিস্ট্রি হয়। নজরুল সিটি বিক্রেতা হিসেবে থাকে। আপনি ও সাক্ষী স্বাক্ষর করেন।',
+      },
+      {
+        id: 'flat-handover',
+        question: 'ফ্ল্যাট হস্তান্তর কি দীর্ঘসময় সাপেক্ষ?',
+        answer: 'নির্ধারিত সময়ের মধ্যেই ফ্ল্যাট হস্তান্তর করা হবে।',
       },
       {
         id: 'flat-call',

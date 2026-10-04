@@ -29,8 +29,8 @@ export type THeroSectionProps = {
 const DEFAULT_PROPERTY_CARD: THeroPropertyCard = {
   tag: 'Featured Plot',
   title: 'নজরুল সিটি ১',
-  location: 'West Mymensingh Medicel Collage, Noyapara,Mymensingh',
-  highlight: 'Verified Papers & Ready Transfer',
+  location: 'পশ্চিম নয়াপাড়া, মেডিকেল কলেজ এলাকা, ময়মনসিংহ',
+  highlight: 'যাচাইকৃত কাগজপত্র ও হস্তান্তরের জন্য প্রস্তুত',
 };
 
 export function HeroSection({
@@ -137,30 +137,30 @@ export function HeroSection({
             </div>
           </div>
 
-          {/* Right Column: Floating Property Highlight Card */}
+          {/* Right Column: Simple Property Highlight Card */}
           {propertyCard && (
             <aside
               aria-label="Featured Property Highlight"
-              className="w-full rounded-2xl border border-border/80 bg-card/85 p-5 text-card-foreground shadow-2xl backdrop-blur-md md:max-w-xs md:shrink-0"
+              className={cn(
+                // Use design tokens for border, background, text, spacing, shadow, radius
+                'w-full rounded-xl border border-border bg-background p-4 text-foreground shadow-xs md:max-w-xs md:shrink-0'
+              )}
             >
-              <div className="mb-4 flex items-center justify-center">
-                <span className="inline-flex items-center rounded-md bg-secondary/15 px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
-                  {propertyCard.tag}
-                </span>
+              <div className="mb-2">
+                <span className="text-xs font-semibold text-primary">{propertyCard.tag}</span>
               </div>
 
-              <h2 className="font-heading text-lg font-bold text-foreground">
+              {/* h2 font, weight, color from design system */}
+              <h2 className="font-heading text-base font-bold text-foreground">
                 {propertyCard.title}
               </h2>
 
-              <div className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground">
-                <MapPin className="size-3.5 shrink-0 text-secondary" />
-                <span className="truncate">{propertyCard.location}</span>
+              <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                <span>{propertyCard.location}</span>
               </div>
 
-              <div className="mt-3.5 flex items-center gap-2 border-t border-border/60 pt-3 text-xs text-muted-foreground">
-                <ShieldCheck className="size-4 shrink-0 text-secondary" />
-                <span className="font-medium text-foreground">{propertyCard.highlight}</span>
+              <div className="mt-3 flex items-center gap-2 border-t border-border pt-2 text-xs">
+                <span>{propertyCard.highlight}</span>
               </div>
             </aside>
           )}

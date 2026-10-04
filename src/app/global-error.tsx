@@ -20,9 +20,9 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <html lang="en" className={`${fontVariables} h-full antialiased`}>
+    <html lang="bn-BD" className={`${fontVariables} h-full antialiased`}>
       <body className="flex min-h-full flex-col items-center justify-center bg-background px-4 text-foreground">
-        <main className="flex max-w-md flex-col items-center text-center">
+        <main lang="en" className="flex max-w-md flex-col items-center text-center">
           <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/10 text-destructive">
             <svg
               className="size-7"
