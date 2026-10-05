@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, MapPin, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { HeroStats, type THeroStatItem } from './hero-stats';
 import { Marquee } from '@/components/shared/marquee';
+import { SITE_CONFIG } from '@/config/site';
 
 export type THeroPropertyCard = {
   tag?: string;
@@ -32,6 +33,8 @@ const DEFAULT_PROPERTY_CARD: THeroPropertyCard = {
   location: 'পশ্চিম নয়াপাড়া, মেডিকেল কলেজ এলাকা, ময়মনসিংহ',
   highlight: 'যাচাইকৃত কাগজপত্র ও হস্তান্তরের জন্য প্রস্তুত',
 };
+
+const PHONE_NUMBER = SITE_CONFIG.contact.phones;
 
 export function HeroSection({
   backgroundImageSrc = '/images/landing-page/hero-bg.jpeg',
@@ -70,7 +73,7 @@ export function HeroSection({
 
         {/* Uniform Transparent Theme Overlay */}
         <div
-          className="absolute inset-0 bg-background/70 dark:bg-background/70"
+          className="absolute inset-0 bg-foreground/50 dark:bg-background/70"
           aria-hidden="true"
         />
 
@@ -85,7 +88,7 @@ export function HeroSection({
           >
             <p>
               সেরা আবাসন সমাধান, যা আপনার স্বপ্নকে বাস্তবে রূপ দেওয়ার জন্য তৈরি। কল করুন:
-              01567777777 | 01910100100
+              {PHONE_NUMBER[0]} | {PHONE_NUMBER[1]}
             </p>
           </Marquee>
         </div>
@@ -108,14 +111,14 @@ export function HeroSection({
             {/* Heading */}
             <h1
               id="hero-heading"
-              className="font-heading text-3xl leading-[1.12] font-extrabold tracking-tight text-foreground md:text-5xl lg:text-6xl"
+              className="font-heading text-3xl leading-[1.12] font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl"
             >
               {title}
             </h1>
 
             {/* Supporting Description */}
             {description && (
-              <p className="max-w-xl text-base leading-relaxed text-foreground md:text-lg">
+              <p className="max-w-xl text-base leading-relaxed text-foreground text-white md:text-lg">
                 {description}
               </p>
             )}

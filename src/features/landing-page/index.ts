@@ -16,3 +16,5 @@ export { PartnersSection } from './components/partners-section/partners-section'
 export { FaqSection } from './components/faq-section/faq-section';
 
 export { HowWeWorkSection } from './components/how-we-work-section/how-we-work-section';
+
+export { ServicesSection } from './components/services-section/services-section';
