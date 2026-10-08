@@ -38,8 +38,8 @@ const SOCIAL_LINKS_DUMMY_DATA = [
 }[];
 
 const LEGAL_LINKS = [
-  { label: 'Privacy', href: '#' },
-  { label: 'Terms', href: '#' },
+  { label: 'গোপনীয়তা নীতি', href: '#' },
+  { label: 'নীতিমালা', href: '#' },
 ] as const;
 
 export function Footer({ className }: Readonly<TFooterProps>) {
@@ -84,13 +84,14 @@ export function Footer({ className }: Readonly<TFooterProps>) {
               href="/projects"
               className={cn(buttonVariants({ size: 'sm' }), 'mt-1 w-fit gap-1.5')}
             >
-              <span>See All Projects</span>
+              <span>প্লট ও ফ্ল্যাট দেখুন</span>
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </Link>
           </div>
 
           <nav aria-label="Footer">
-            <h3>Explore</h3>
+            <h3>মেনু</h3>
+
             <ul className="mt-4 flex flex-col gap-1">
               {PUBLIC_NAV_ITEMS.map((item) => (
                 <li key={item.href}>
@@ -106,7 +107,7 @@ export function Footer({ className }: Readonly<TFooterProps>) {
           </nav>
 
           <div>
-            <h3>Contact</h3>
+            <h3>যোগাযোগ </h3>
             <ul className="mt-4 flex flex-col gap-1">
               {SITE_CONFIG.contact.phones.map((phone) => (
                 <li key={phone}>
@@ -138,7 +139,8 @@ export function Footer({ className }: Readonly<TFooterProps>) {
           </div>
 
           <div>
-            <h3>Follow us</h3>
+            <h3>অনুসরণ করুন</h3>
+
             <ul className="mt-4 flex flex-wrap gap-2">
               {SOCIAL_LINKS_DUMMY_DATA.map((item) => (
                 <li key={item.label}>

@@ -17,26 +17,26 @@ export type THeroStatsProps = {
 export const DEFAULT_HERO_STATS: readonly THeroStatItem[] = [
   {
     id: 'plots-sold',
-    label: 'Plots Sold',
-    value: '250+',
+    label: 'বিক্রিত প্লট',
+    value: '২৫০+',
     icon: Home,
   },
   {
     id: 'happy-clients',
-    label: 'Happy Clients',
-    value: '980+',
+    label: 'সন্তুষ্ট গ্রাহক',
+    value: '৯৮০+',
     icon: Users,
   },
   {
     id: 'properties-listed',
-    label: 'Properties Listed',
-    value: '850+',
+    label: 'তালিকাভুক্ত সম্পত্তি',
+    value: '৮৫০+',
     icon: Building2,
   },
   {
     id: 'experiences',
-    label: 'Experiences',
-    value: '5+',
+    label: 'বছর অভিজ্ঞতা',
+    value: '৫+',
     icon: Award,
   },
 ] as const;

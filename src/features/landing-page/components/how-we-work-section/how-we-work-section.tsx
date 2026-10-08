@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { SectionLayout } from '@/components/layout';
 import { buttonVariants } from '@/components/ui/button';
 import { SITE_CONFIG } from '@/config/site';
@@ -32,11 +31,10 @@ export function HowWeWorkSection() {
 
         <div className="mt-8 flex flex-col items-center gap-2 lg:mt-10">
           <Link href="#contact" className={cn(buttonVariants(), 'gap-1.5')}>
-            Contact us
-            <ArrowUpRight aria-hidden="true" />
+            যোগাযোগ করুন
           </Link>
           <p className="text-sm text-muted-foreground">
-            Or call{' '}
+            অথবা কল করুন{' '}
             <a
               href={`tel:${CONTACT_PHONE}`}
               className="rounded-sm font-medium text-foreground underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
