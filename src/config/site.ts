@@ -25,9 +25,9 @@ export const SITE_CONFIG = {
 } as const;
 
 export const PUBLIC_NAV_ITEMS = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'How we work', href: '#how-we-work' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'আমাদের সম্পর্কে', href: '#about' },
+  { label: 'সেবাসমূহ', href: '#services' },
+  { label: 'প্লট ও ফ্ল্যাট', href: '#projects' },
+  { label: 'কাজের পদ্ধতি', href: '#how-we-work' },
+  { label: 'যোগাযোগ', href: '#contact' },
 ] as const;

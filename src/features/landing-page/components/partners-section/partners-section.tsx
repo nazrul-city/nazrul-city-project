@@ -11,9 +11,9 @@ export function PartnersSection() {
   return (
     <SectionLayout id="partners" aria-labelledby="partners-heading">
       <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
-        <p className="text-sm font-medium text-muted-foreground">Partners</p>
+        <p className="text-sm font-medium text-muted-foreground">পার্টনারস</p>
         <h2 id="partners-heading" className="mt-2">
-          Organizations we work with
+          আমরা যেসব প্রতিষ্ঠানের সাথে কাজ করি
         </h2>
       </div>
 

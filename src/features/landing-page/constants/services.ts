@@ -19,7 +19,7 @@ export const SERVICES = [
     imageSrc: '/images/landing-page/our-services/plot.png',
     imageAlt: 'ইটের দেয়াল দিয়ে ভাগ করা প্লটের মাঠ',
     ctaLink: '/plots',
-    ctaText: 'See Available Plots',
+    ctaText: 'প্লট দেখুন',
   },
   {
     id: 'flat',
@@ -31,6 +31,6 @@ export const SERVICES = [
     imageSrc: '/images/landing-page/our-services/flat.jpg',
     imageAlt: 'বহুতল ফ্ল্যাট ভবন',
     ctaLink: '/flats',
-    ctaText: 'See Available Flats',
+    ctaText: 'ফ্ল্যাট দেখুন',
   },
 ] as const satisfies readonly TService[];

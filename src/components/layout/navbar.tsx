@@ -118,7 +118,7 @@ export function Navbar() {
             onClick={() => handleLinkClick('#contact')}
             className={cn(buttonVariants({ size: 'sm' }), 'hidden gap-1.5 md:inline-flex')}
           >
-            <span>Contact us</span>
+            <span>যোগাযোগ </span>
             <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
 
@@ -178,17 +178,12 @@ export function Navbar() {
             </nav>
 
             <div className="flex flex-col gap-3 pt-2">
-              <div className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/40 px-4 py-2.5">
-                <span className="text-sm font-medium text-foreground">Theme</span>
-                <ThemeToggle />
-              </div>
-
               <Link
                 href="#contact"
                 onClick={() => handleLinkClick('#contact')}
                 className={cn(buttonVariants({ size: 'lg' }), 'w-full justify-center gap-2')}
               >
-                <span>Contact us</span>
+                <span>যোগাযোগ করুন</span>
                 <ArrowUpRight className="size-4" />
               </Link>
             </div>

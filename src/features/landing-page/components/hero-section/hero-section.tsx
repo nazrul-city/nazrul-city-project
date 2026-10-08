@@ -28,7 +28,7 @@ export type THeroSectionProps = {
 };
 
 const DEFAULT_PROPERTY_CARD: THeroPropertyCard = {
-  tag: 'Featured Plot',
+  tag: 'বিশেষ প্রকল্প',
   title: 'নজরুল সিটি ১',
   location: 'পশ্চিম নয়াপাড়া, মেডিকেল কলেজ এলাকা, ময়মনসিংহ',
   highlight: 'যাচাইকৃত কাগজপত্র ও হস্তান্তরের জন্য প্রস্তুত',
@@ -38,13 +38,13 @@ const PHONE_NUMBER = SITE_CONFIG.contact.phones;
 
 export function HeroSection({
   backgroundImageSrc = '/images/landing-page/hero-bg.jpeg',
-  eyebrow = 'Land, Plots, Ready & Unready Flats',
+  eyebrow = 'প্লট, ফ্ল্যাট ও জমি',
   //   title = 'Find or sell property with Nazrul City.',
   //   title = 'Find a place that feels like home.',
   title = 'এমন একটি জায়গা খুঁজে নিন যা বাড়ির মতো মনে হয়।',
   //   description = 'Transparent pricing, verified deeds, and a seamless process from first visit to handover. Invest in prime residential plots and premium units with confidence.',
   description = 'স্বচ্ছ মূল্য নির্ধারণ, যাচাইকৃত দলিল এবং প্রথম পরিদর্শন থেকে হস্তান্তর পর্যন্ত একটি নির্বিঘ্ন প্রক্রিয়া। আত্মবিশ্বাসের সাথে প্রধান আবাসিক প্লট এবং প্রিমিয়াম ইউনিটে বিনিয়োগ করুন।',
-  ctaText = 'Explore Properties',
+  ctaText = 'জমি ও ফ্ল্যাট দেখুন',
   ctaHref = '#listings',
   propertyCard = DEFAULT_PROPERTY_CARD,
   stats,
