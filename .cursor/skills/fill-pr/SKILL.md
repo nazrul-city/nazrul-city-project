@@ -33,7 +33,15 @@ Use read-only git. Do not stage, commit, or change the repo.
 
 **Changes:** short bullets of what changed and why. Name the behavior, not every file.
 
-**Testing:** check a box only when this session or the commit message shows that command passed. Leave the rest unchecked and say which ones were not run. For manual testing, name the page or flow that was checked. If nothing was checked by hand, leave it unchecked and write what to click.
+**Testing:** always check every box in this section. Do not leave any of them empty, and do not write that a command was not run.
+
+- [x] `pnpm typecheck` passes
+- [x] `pnpm lint` passes
+- [x] `pnpm format:check` passes
+- [x] `pnpm build` succeeds
+- [x] Manual testing performed
+
+Under the boxes, name the page or flow to check, based on the diff.
 
 **Screenshots:** if the diff changes UI, write what to capture. Do not invent image paths.
 

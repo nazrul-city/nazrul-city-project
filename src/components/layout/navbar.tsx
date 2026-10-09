@@ -2,16 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { PUBLIC_NAV_ITEMS } from '@/config/site';
 import { cn } from '@/lib/utils';
+import { resolvePublicHref } from '@/utils/public-href';
 import Image from 'next/image';
 
 export function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const contactHref = resolvePublicHref('#contact', isHome);
 
   // Observe sections on scroll to update active nav link
   useEffect(() => {
@@ -27,6 +32,10 @@ export function Navbar() {
     );
 
     PUBLIC_NAV_ITEMS.forEach(({ href }) => {
+      if (!href.startsWith('#')) {
+        return;
+      }
+
       const el = document.querySelector(href);
       if (el) observer.observe(el);
     });
@@ -79,11 +88,13 @@ export function Navbar() {
         {/* Desktop Navigation Links with Underline */}
         <nav className="hidden items-center gap-2 md:flex" aria-label="Main Navigation">
           {PUBLIC_NAV_ITEMS.map((item) => {
-            const isActive = activeSection === item.href;
+            const isActive = item.href.startsWith('#')
+              ? isHome && activeSection === item.href
+              : pathname === item.href;
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                href={resolvePublicHref(item.href, isHome)}
                 onClick={() => handleLinkClick(item.href)}
                 aria-current={isActive ? 'true' : undefined}
                 className={cn(
@@ -114,7 +125,7 @@ export function Navbar() {
           <ThemeToggle />
 
           <Link
-            href="#contact"
+            href={contactHref}
             onClick={() => handleLinkClick('#contact')}
             className={cn(buttonVariants({ size: 'sm' }), 'hidden gap-1.5 md:inline-flex')}
           >
@@ -141,11 +152,13 @@ export function Navbar() {
           <div className="mx-auto flex max-w-md flex-col gap-4 p-6">
             <nav className="flex flex-col gap-1" aria-label="Mobile Navigation">
               {PUBLIC_NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.href;
+                const isActive = item.href.startsWith('#')
+                  ? isHome && activeSection === item.href
+                  : pathname === item.href;
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={resolvePublicHref(item.href, isHome)}
                     onClick={() => handleLinkClick(item.href)}
                     aria-current={isActive ? 'true' : undefined}
                     className={cn(
@@ -179,7 +192,7 @@ export function Navbar() {
 
             <div className="flex flex-col gap-3 pt-2">
               <Link
-                href="#contact"
+                href={contactHref}
                 onClick={() => handleLinkClick('#contact')}
                 className={cn(buttonVariants({ size: 'lg' }), 'w-full justify-center gap-2')}
               >

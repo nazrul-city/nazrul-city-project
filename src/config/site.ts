@@ -6,7 +6,8 @@ export const SITE_CONFIG = {
   contact: {
     phones: ['01837777777', '01910100100'],
     email: 'info@nazrulcity.com',
-    address: 'Nijhum Plaza, 105 A.B. Guha Road, Ganginarpar, Mymensingh 2200, Bangladesh',
+    // address: 'Nijhum Plaza, 105 A.B. Guha Road, Ganginarpar, Mymensingh 2200, Bangladesh',
+    address: 'নিঝুম প্লাজা, ১০৫ এ.বি. গুহ রোড, গাঙ্গিনার পার রোড, ময়মনসিংহ ২২০০, বাংলাদেশ',
     whatsapp: '01910100100',
     hours: {
       days: 'প্রতিদিন',
@@ -25,7 +26,7 @@ export const SITE_CONFIG = {
 } as const;
 
 export const PUBLIC_NAV_ITEMS = [
-  { label: 'আমাদের সম্পর্কে', href: '#about' },
+  { label: 'আমাদের সম্পর্কে', href: '/about-us' },
   { label: 'সেবাসমূহ', href: '#services' },
   { label: 'প্লট ও ফ্ল্যাট', href: '#projects' },
   { label: 'কাজের পদ্ধতি', href: '#how-we-work' },

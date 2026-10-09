@@ -224,6 +224,15 @@
   body {
     @apply bg-background font-sans text-foreground;
   }
+
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  ::-moz-selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
   /* Headings */
   h1,
   h2,

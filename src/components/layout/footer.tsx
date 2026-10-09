@@ -5,6 +5,7 @@ import { SocialIcon, type TSocialIcon } from '@/components/shared/social-icon';
 import { buttonVariants } from '@/components/ui/button';
 import { PUBLIC_NAV_ITEMS, SITE_CONFIG } from '@/config/site';
 import { cn } from '@/lib/utils';
+import { resolvePublicHref } from '@/utils/public-href';
 
 type TFooterProps = {
   className?: string;
@@ -96,7 +97,7 @@ export function Footer({ className }: Readonly<TFooterProps>) {
               {PUBLIC_NAV_ITEMS.map((item) => (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
+                    href={resolvePublicHref(item.href, false)}
                     className="inline-flex items-center py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.label}
