@@ -68,7 +68,7 @@ export function HeroSection({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center md:object-right"
+          className="scale-100 object-cover object-center blur-xs md:object-right"
         />
 
         {/* Uniform Transparent Theme Overlay */}
