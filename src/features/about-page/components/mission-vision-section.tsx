@@ -25,6 +25,7 @@ export function MissionVisionSection() {
         <article className="relative overflow-hidden rounded-lg bg-foreground p-6 text-background md:col-span-3 md:p-8 dark:bg-foreground dark:text-background">
           <CardBackdrop
             src={MISSION_IMAGE.src}
+            alt={MISSION_IMAGE.alt}
             imageClassName="object-[center_60%]"
             overlayClassName="bg-foreground/80 dark:bg-foreground/90"
           />
@@ -47,13 +48,13 @@ export function MissionVisionSection() {
         <AboutMedia
           src={MISSION_IMAGE.src}
           alt={MISSION_IMAGE.alt}
-          sizes="(min-width: 768px) 40vw, 100vw"
+          sizes="(min-width: 768px) 40vw, 1px"
         />
 
         <AboutMedia
           src={VISION_IMAGE.src}
           alt={VISION_IMAGE.alt}
-          sizes="(min-width: 768px) 40vw, 100vw"
+          sizes="(min-width: 768px) 40vw, 1px"
           imageClassName="object-contain"
           className="bg-foreground dark:bg-card"
         />
@@ -61,6 +62,7 @@ export function MissionVisionSection() {
         <article className="relative overflow-hidden rounded-lg bg-secondary p-6 text-primary-foreground md:col-span-3 md:p-8 dark:bg-secondary/70">
           <CardBackdrop
             src={VISION_IMAGE.src}
+            alt={VISION_IMAGE.alt}
             overlayClassName="bg-secondary/85 dark:bg-secondary/85"
           />
           <div className="relative flex flex-col gap-4">
@@ -91,12 +93,24 @@ type TCardBackdropProps = {
   src: string;
   overlayClassName: string;
   imageClassName?: string;
+  alt: string;
 };
 
-function CardBackdrop({ src, overlayClassName, imageClassName }: Readonly<TCardBackdropProps>) {
+function CardBackdrop({
+  src,
+  overlayClassName,
+  imageClassName,
+  alt,
+}: Readonly<TCardBackdropProps>) {
   return (
     <div className="absolute inset-0 md:hidden" aria-hidden="true">
-      <Image src={src} alt="" fill sizes="100vw" className={cn('object-cover', imageClassName)} />
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 767px) calc(100vw - 2rem), 1px"
+        className={cn('object-cover', imageClassName)}
+      />
       <div className={cn('absolute inset-0', overlayClassName)} />
     </div>
   );
