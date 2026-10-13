@@ -10,7 +10,7 @@ export function AboutIntro() {
   return (
     <SectionLayout aria-labelledby="about-heading" containerClassName="relative">
       <div className="relative z-10 max-w-xl py-8 md:py-16">
-        <h1 className="text-lg font-semibold tracking-wide text-primary">আমাদের সম্পর্কে</h1>
+        {/* <h1 className="text-lg font-semibold tracking-wide text-primary">আমাদের সম্পর্কে</h1> */}
         <h2 id="about-heading" className="mt-3">
           ঠিকানা শুধু জমিতে নয়, গড়ে উঠুক
           <br />
