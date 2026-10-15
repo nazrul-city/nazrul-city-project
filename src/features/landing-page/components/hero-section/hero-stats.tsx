@@ -35,8 +35,8 @@ export const DEFAULT_HERO_STATS: readonly THeroStatItem[] = [
   },
   {
     id: 'experiences',
-    label: 'বছর অভিজ্ঞতা',
-    value: '৫+',
+    label: '2020 সাল থেকে শুরু',
+    value: '6+ বছর',
     icon: Award,
   },
 ] as const;

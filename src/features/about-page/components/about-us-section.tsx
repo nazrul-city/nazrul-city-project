@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { SectionLayout } from '@/components/layout';
 
 const ABOUT_US_IMAGE = {
-  src: '/images/about-page/about-us-section/office2.jpg',
+  src: '/images/about-page/about-us-section/office.jpg',
   alt: 'Nazrul City Office',
 } as const;
 

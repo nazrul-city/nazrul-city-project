@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
     whatsapp: '01910100100',
     hours: {
       days: 'প্রতিদিন',
-      time: '8:00AM –  11:00PM',
+      time: 'সকাল ৮:০০ টা থেকে রাত ১১:০০ টা পর্যন্ত',
       openHour: 8,
       closeHour: 23,
     },
