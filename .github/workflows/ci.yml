@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 env:
-  NODE_VERSION: '22'
+  NODE_VERSION: '24.22.0'
 
 jobs:
   # Install & cache dependencies (shared by all jobs)

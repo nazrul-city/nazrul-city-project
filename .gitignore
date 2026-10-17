@@ -49,3 +49,5 @@ yarn-error.log*
 next-env.d.ts
 
 project-todo-task.txt
+node_modules/
+dist/

@@ -8,9 +8,18 @@ Thank you for your interest in contributing to Nazrul City! To maintain code qua
 
 Before getting started, ensure you have the following installed locally:
 
-- **Node.js**: `20.18.x` or later (`node -v`)
-- **pnpm**: `9.15.x` or later (`pnpm -v`)
+- **Node.js**: `24.22.0` (24.x LTS) — see `.nvmrc` (`node -v`)
+- **pnpm**: `11.28.6` (matches `packageManager` in `package.json`) (`pnpm -v`)
 - **Git**: Latest version
+
+If you use nvm:
+
+```bash
+nvm install   # reads .nvmrc → 24.22.0
+nvm use
+corepack enable
+corepack prepare pnpm@11.28.6 --activate
+```
 
 ---
 
@@ -21,7 +30,7 @@ Before getting started, ensure you have the following installed locally:
 ```bash
 # Fork the repository on GitHub, then clone your fork:
 git clone https://github.com/nazrul-city/nazrul-city-project.git
-cd latest-portfolio
+cd nazrul-city-project
 pnpm install
 ```
 

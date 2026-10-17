@@ -1,0 +1,19 @@
+# pnpm v11 project settings (single-package repo).
+# allowBuilds: packages allowed to run install/postinstall scripts.
+allowBuilds:
+  '@sentry/cli': true
+  esbuild: true
+  unrs-resolver: true
+
+# Force patched transitive versions where parents have not caught up yet.
+overrides:
+  # GHSA-5qjj-4xww-7phc — optional peer of @hookform/resolvers / @t3-oss/env-*
+  valibot: '>=1.4.2'
+
+# Advisories with no usable patched release (or not reachable in our app).
+audit:
+  ignore:
+    # GHSA-vfj7-8cjw-p6xm / CVE-2026-93687 — braces <=3.0.3 only; npm has no
+    # patched version yet. Only reaches us via eslint-config-next + shadcn CLI
+    # (dev tooling), not production runtime.
+    - GHSA-vfj7-8cjw-p6xm

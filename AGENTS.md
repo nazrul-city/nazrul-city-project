@@ -54,7 +54,7 @@ If a skill conflicts with this file, this file wins. A skill never overrides the
 - Next.js 16 (App Router), React 19 with the React Compiler plugin, TypeScript 5 (strict).
 - Tailwind CSS v4, `shadcn/ui`, Base UI (`@base-ui/react`), `lucide-react`, `next-themes`, `tw-animate-css`.
 - `clsx`, `tailwind-merge`, `class-variance-authority`, `zod`, `@t3-oss/env-nextjs`, Sentry (`@sentry/nextjs`).
-- `pnpm` only (never `npm` or `yarn`). Node >= 20. Check `package.json` for exact versions and scripts.
+- `pnpm` only (never `npm` or `yarn`). Node 24.x (pin in `.nvmrc`). Check `package.json` `packageManager` / `engines` for exact versions and scripts.
 
 ---
 
