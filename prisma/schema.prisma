@@ -1,0 +1,20 @@
+// Prisma ORM schema. Connection URL is in prisma.config.ts (Prisma 7).
+// Docs: https://www.prisma.io/docs/guides/v7/frameworks/nextjs
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Temporary smoke-test model — replace with real domain models when ready.
+model Test {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

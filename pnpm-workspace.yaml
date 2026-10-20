@@ -1,8 +1,10 @@
 # pnpm v11 project settings (single-package repo).
 # allowBuilds: packages allowed to run install/postinstall scripts.
 allowBuilds:
+  '@prisma/engines': true
   '@sentry/cli': true
   esbuild: true
+  prisma: true
   unrs-resolver: true
 
 # Force patched transitive versions where parents have not caught up yet.

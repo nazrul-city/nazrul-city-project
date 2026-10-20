@@ -10,6 +10,8 @@ export const serverEnv = createEnv({
   server: {
     NEXT_RUNTIME: z.enum(['nodejs', 'edge']).optional(),
     CI: z.string().optional(),
+    DATABASE_URL: z.string().url(),
+    LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info']).default('info'),
     SENTRY_ORG: z.string().min(1),
     SENTRY_PROJECT: z.string().min(1),
     SENTRY_AUTH_TOKEN: z.string().min(1),

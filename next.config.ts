@@ -4,6 +4,8 @@ import { env } from './src/config/env';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  // Keep Pino (and pretty transport) out of the server bundle — required for worker transports.
+  serverExternalPackages: ['pino', 'pino-pretty'],
 };
 
 export default withSentryConfig(nextConfig, {
