@@ -11,6 +11,24 @@ allowBuilds:
 overrides:
   # GHSA-5qjj-4xww-7phc — optional peer of @hookform/resolvers / @t3-oss/env-*
   valibot: '>=1.4.2'
+  # GHSA-mrhx-c7xc-m3w5 — memory exhaustion in constrained collections
+  zod: '>=4.6.6'
+  # GHSA-27r3-jxmh-p828 — DoS via trailing bytes after compressed request body
+  body-parser: '>=2.4.0'
+  # GHSA-xjj6-f33q-929c, GHSA-4w7w-5xrc-9h26, GHSA-2m5v-pch6-74hx, GHSA-qrxm-fqhp-jwvm
+  undici: '>=7.30.1'
+  # GHSA-3f7j-7jwc-fxfj — command injection in services()
+  systeminformation: '>=5.33.16'
+  # GHSA-rxp7-6hxx-x8q5 — quadratic time Address6 zone identifier matching
+  ip-address: '>=10.7.4'
+  # GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr, GHSA-xhq7-xmqj-769h, GHSA-333x-w4r6-6crp
+  fast-uri: '>=3.1.9'
+  # GHSA-6pq8-jhm2-2vcw — TypeError DoS on non-callable own toString
+  qs: '>=6.16.1'
+  # GHSA-3g3m-2fjr-6pw4 — AbortSignal post-timeout traversal
+  glob: '>=14.0.2'
+  # GHSA-g3hv-75wg-m249 — DoS via globparts amplification
+  minimatch: '>=11.0.1'
 
 # Advisories with no usable patched release (or not reachable in our app).
 audit:
@@ -19,6 +37,3 @@ audit:
     # patched version yet. Only reaches us via eslint-config-next + shadcn CLI
     # (dev tooling), not production runtime.
     - GHSA-vfj7-8cjw-p6xm
-
-patchedDependencies:
-  next-themes@0.4.6: patches/next-themes@0.4.6.patch
