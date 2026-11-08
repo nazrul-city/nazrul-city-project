@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { env } from '@/config/env';
+import { redactSentryEvent } from '@/utils/redact-connection-url';
 
 Sentry.init({
   dsn: env.NEXT_PUBLIC_SENTRY_DSN || undefined,
@@ -40,7 +41,7 @@ Sentry.init({
     ) {
       return null;
     }
-    return event;
+    return redactSentryEvent(event);
   },
 });
 

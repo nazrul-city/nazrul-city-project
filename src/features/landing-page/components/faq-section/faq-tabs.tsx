@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { buttonVariants } from '@/components/ui/button';
-import { FAQ_GROUPS, type TFaqItem } from '@/features/landing-page/constants/faqs';
+import type { TFaqGroup, TFaqItem } from '@/features/landing-page/constants/faqs';
 import { cn } from '@/lib/utils';
 
 function getCategoryTabClassName(state: { active: boolean }) {
@@ -21,18 +21,28 @@ function getCategoryTabClassName(state: { active: boolean }) {
   );
 }
 
-export function FaqTabs() {
+type TFaqTabsProps = {
+  groups: readonly TFaqGroup[];
+};
+
+export function FaqTabs({ groups }: Readonly<TFaqTabsProps>) {
+  const firstGroup = groups[0];
+
+  if (!firstGroup) {
+    return null;
+  }
+
   return (
-    <Tabs.Root defaultValue={FAQ_GROUPS[0].id} className="mt-8 md:mt-10">
+    <Tabs.Root defaultValue={firstGroup.id} className="mt-8 md:mt-10">
       <Tabs.List className="grid grid-cols-2 gap-2" aria-label="Question type">
-        {FAQ_GROUPS.map((group) => (
+        {groups.map((group) => (
           <Tabs.Tab key={group.id} value={group.id} className={getCategoryTabClassName}>
             {group.label}
           </Tabs.Tab>
         ))}
       </Tabs.List>
 
-      {FAQ_GROUPS.map((group) => (
+      {groups.map((group) => (
         <Tabs.Panel key={group.id} value={group.id} className="mt-6">
           <FaqAccordion category={group.id} items={group.items} />
         </Tabs.Panel>

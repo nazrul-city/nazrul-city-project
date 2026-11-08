@@ -2,10 +2,17 @@ import 'server-only';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import pino from 'pino';
 import { env } from '@/config/env';
+import { redactConnectionUrls } from '@/utils/redact-connection-url';
 
 const REQUEST_ID_HEADERS = ['x-request-id', 'x-correlation-id'] as const;
 
-type TRequestLogContext = {
+/**
+ * Incoming ids are echoed into logs and the response header.
+ * Only a single token is accepted, so a caller cannot inject a new log line.
+ */
+const REQUEST_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
+
+export type TRequestLogContext = {
   requestId: string;
   method: string;
   path: string;
@@ -40,7 +47,7 @@ function formatTimestampWithTimezone(): string {
 function resolveRequestId(request: Request): string {
   for (const headerName of REQUEST_ID_HEADERS) {
     const value = request.headers.get(headerName)?.trim();
-    if (value) {
+    if (value && REQUEST_ID_PATTERN.test(value)) {
       return value;
     }
   }
@@ -92,6 +99,25 @@ const rootLogger = pino({
       }),
 });
 
+function writeLog(level: 'info' | 'warn' | 'error' | 'fatal', message: string): void {
+  const safeMessage = redactConnectionUrls(message);
+
+  switch (level) {
+    case 'info':
+      rootLogger.info(safeMessage);
+      return;
+    case 'warn':
+      rootLogger.warn(safeMessage);
+      return;
+    case 'error':
+      rootLogger.error(safeMessage);
+      return;
+    case 'fatal':
+      rootLogger.fatal(safeMessage);
+      return;
+  }
+}
+
 /**
  * App logger — pass only a message string.
  * level, timestamp, requestId, method, and path are attached automatically
@@ -105,18 +131,27 @@ const rootLogger = pino({
  */
 export const logger: TAppLogger = {
   info(message) {
-    rootLogger.info(message);
+    writeLog('info', message);
   },
   warn(message) {
-    rootLogger.warn(message);
+    writeLog('warn', message);
   },
   error(message) {
-    rootLogger.error(message);
+    writeLog('error', message);
   },
   fatal(message) {
-    rootLogger.fatal(message);
+    writeLog('fatal', message);
   },
 };
+
+/**
+ * Read-only request log context for the current async scope
+ * (set by `withRequestLogging`). Used by the API error handler
+ * to tag Sentry events with `requestId`.
+ */
+export function getRequestLogContext(): TRequestLogContext | undefined {
+  return requestLogContext.getStore();
+}
 
 /**
  * Bind requestId / method / path for the duration of a Route Handler,

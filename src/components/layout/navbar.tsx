@@ -1,31 +1,59 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { PUBLIC_NAV_ITEMS } from '@/config/site';
+import { useHideOnScrollDown } from '@/hooks/use-hide-on-scroll-down';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { resolvePublicHref } from '@/utils/public-href';
 import Image from 'next/image';
 
+function isNavItemActive(
+  href: string,
+  pathname: string,
+  isHome: boolean,
+  activeSection: string
+): boolean {
+  if (href.startsWith('#')) {
+    return isHome && activeSection === href;
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === '/';
+  const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const isNavbarHidden = useHideOnScrollDown(isMobile && !isMobileMenuOpen);
   const contactHref = resolvePublicHref('#contact', isHome);
 
   // Observe sections on scroll to update active nav link
   useEffect(() => {
+    if (!isHome) {
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
+          const sectionHref = `#${entry.target.id}`;
+
           if (entry.isIntersecting) {
-            setActiveSection(`#${entry.target.id}`);
+            setActiveSection(sectionHref);
+            continue;
           }
+
+          // Sections without a nav link (FAQ, partners, contact) are not observed,
+          // so clear the highlight when the active section scrolls out of view.
+          setActiveSection((current) => (current === sectionHref ? '' : current));
         }
       },
       { rootMargin: '-20% 0px -70% 0px' }
@@ -41,15 +69,43 @@ export function Navbar() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
-  const handleLinkClick = (href: string) => {
+  function handleNavLinkClick(event: MouseEvent<HTMLAnchorElement>, href: string) {
     setActiveSection(href);
     setIsMobileMenuOpen(false);
-  };
+
+    // Same-hash clicks do not change the URL, so the browser will not scroll again.
+    // On the home page, scroll the section into view ourselves every time.
+    if (!href.startsWith('#') || !isHome) {
+      return;
+    }
+
+    const section = document.querySelector(href);
+
+    if (!(section instanceof HTMLElement)) {
+      return;
+    }
+
+    event.preventDefault();
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    if (window.location.hash !== href) {
+      window.history.replaceState(null, '', href);
+    }
+  }
+
+  function handleToggleMobileMenu() {
+    setIsMobileMenuOpen((isOpen) => !isOpen);
+  }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-border/50 bg-muted">
+    <header
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 w-full border-b border-border/50 bg-muted transition-transform duration-300 ease-out md:translate-y-0',
+        isNavbarHidden ? '-translate-y-full' : 'translate-y-0'
+      )}
+    >
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 md:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link
@@ -57,21 +113,21 @@ export function Navbar() {
           className="group flex items-center gap-2.5 text-foreground transition-opacity hover:opacity-90"
         >
           {/* Logo image swaps automatically based on theme */}
-          <span className="flex size-12 items-center justify-center rounded-lg p-0.5 shadow-xs transition-transform duration-200 group-hover:scale-105">
+          <span className="relative size-16 shrink-0 transition-transform duration-200 group-hover:scale-105">
             <Image
               src="/images/nc-logo.png"
-              alt="Nazrul City Logo"
-              className="hidden h-10 w-10 object-contain dark:block"
-              width={32}
-              height={32}
+              alt=""
+              fill
+              sizes="64px"
+              className="hidden object-contain dark:block"
               priority
             />
             <Image
               src="/images/nc-logo-dark.png"
-              alt="Nazrul City Logo"
-              className="block h-10 w-10 object-contain dark:hidden"
-              width={32}
-              height={32}
+              alt="Nazrul City"
+              fill
+              sizes="64px"
+              className="object-contain dark:hidden"
               priority
             />
           </span>
@@ -88,14 +144,12 @@ export function Navbar() {
         {/* Desktop Navigation Links with Underline */}
         <nav className="hidden items-center gap-2 md:flex" aria-label="Main Navigation">
           {PUBLIC_NAV_ITEMS.map((item) => {
-            const isActive = item.href.startsWith('#')
-              ? isHome && activeSection === item.href
-              : pathname === item.href;
+            const isActive = isNavItemActive(item.href, pathname, isHome, activeSection);
             return (
               <Link
                 key={item.href}
                 href={resolvePublicHref(item.href, isHome)}
-                onClick={() => handleLinkClick(item.href)}
+                onClick={(event) => handleNavLinkClick(event, item.href)}
                 aria-current={isActive ? 'true' : undefined}
                 className={cn(
                   'group relative px-3.5 py-2 text-sm font-medium transition-colors duration-200',
@@ -126,7 +180,7 @@ export function Navbar() {
 
           <Link
             href={contactHref}
-            onClick={() => handleLinkClick('#contact')}
+            onClick={(event) => handleNavLinkClick(event, '#contact')}
             className={cn(buttonVariants({ size: 'sm' }), 'hidden gap-1.5 md:inline-flex')}
           >
             <span>যোগাযোগ </span>
@@ -136,7 +190,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            onClick={handleToggleMobileMenu}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             className="flex size-9 items-center justify-center rounded-lg border border-border/50 text-foreground transition-colors hover:bg-muted md:hidden"
@@ -152,14 +206,12 @@ export function Navbar() {
           <div className="mx-auto flex max-w-md flex-col gap-4 p-6">
             <nav className="flex flex-col gap-1" aria-label="Mobile Navigation">
               {PUBLIC_NAV_ITEMS.map((item) => {
-                const isActive = item.href.startsWith('#')
-                  ? isHome && activeSection === item.href
-                  : pathname === item.href;
+                const isActive = isNavItemActive(item.href, pathname, isHome, activeSection);
                 return (
                   <Link
                     key={item.href}
                     href={resolvePublicHref(item.href, isHome)}
-                    onClick={() => handleLinkClick(item.href)}
+                    onClick={(event) => handleNavLinkClick(event, item.href)}
                     aria-current={isActive ? 'true' : undefined}
                     className={cn(
                       'group relative flex items-center justify-between rounded-lg px-4 py-3 text-base font-medium transition-colors',
@@ -193,7 +245,7 @@ export function Navbar() {
             <div className="flex flex-col gap-3 pt-2">
               <Link
                 href={contactHref}
-                onClick={() => handleLinkClick('#contact')}
+                onClick={(event) => handleNavLinkClick(event, '#contact')}
                 className={cn(buttonVariants({ size: 'lg' }), 'w-full justify-center gap-2')}
               >
                 <span>যোগাযোগ করুন</span>

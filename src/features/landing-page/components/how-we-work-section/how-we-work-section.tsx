@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { SectionLayout } from '@/components/layout';
 import { buttonVariants } from '@/components/ui/button';
-import { SITE_CONFIG } from '@/config/site';
+import { getSiteContact } from '@/config/site-contact';
 import { HOW_WE_WORK_STEPS } from '@/features/landing-page/constants/how-we-work';
 import { cn } from '@/lib/utils';
 
-const CONTACT_PHONE = SITE_CONFIG.contact.phones[0];
+export async function HowWeWorkSection() {
+  const { primaryPhone } = await getSiteContact();
 
-export function HowWeWorkSection() {
   return (
     <SectionLayout id="how-we-work" aria-labelledby="how-we-work-heading">
       <div className="mx-auto max-w-3xl">
@@ -36,10 +36,10 @@ export function HowWeWorkSection() {
           <p className="text-sm text-muted-foreground">
             অথবা কল করুন{' '}
             <a
-              href={`tel:${CONTACT_PHONE}`}
+              href={`tel:${primaryPhone}`}
               className="rounded-sm font-medium text-foreground underline-offset-4 hover:underline focus-visible:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
             >
-              {CONTACT_PHONE}
+              {primaryPhone}
             </a>
           </p>
         </div>

@@ -1,6 +1,7 @@
 import { EventEmitter } from 'node:events';
 import * as Sentry from '@sentry/nextjs';
 import { env } from '@/config/env';
+import { redactSentryEvent } from '@/utils/redact-connection-url';
 
 // Next.js App Router streaming + Sentry HTTP instrumentation together attach 11 listeners
 // to ServerResponse. Raise the default warning threshold (10) to 25 to silence false positives.
@@ -16,8 +17,8 @@ Sentry.init({
   // Tracing: 100% in development for local verification, 10% in production
   tracesSampleRate: env.NODE_ENV === 'development' ? 1.0 : 0.1,
 
-  // Attach local variable values to stack frames (server runtime only)
-  includeLocalVariables: true,
+  // Local variables are left off. They can include passwords and the database URL.
+  includeLocalVariables: false,
 
   // Enable Sentry Logs integration + auto-capture warn/error console calls
   enableLogs: true,
@@ -25,4 +26,8 @@ Sentry.init({
 
   // Enable debug mode only when explicitly troubleshooting
   debug: false,
+
+  beforeSend(event) {
+    return redactSentryEvent(event);
+  },
 });

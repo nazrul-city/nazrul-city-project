@@ -84,7 +84,7 @@ git commit -m "fix: resolve navigation drawer scroll lock on mobile"
 ```
 
 > **Automated Git Hooks (Husky):**
-> Upon committing, Husky will run `lint-staged` and validate your commit message format with `commitlint`. Commits violating the format will be rejected locally.
+> Upon committing, Husky runs `lint-staged` and `commitlint`. lint-staged runs ESLint and Prettier on the staged files, and `prisma format` on staged Prisma files. commitlint rejects a message that is not a Conventional Commit.
 
 ### Step 6: Push & Open a Pull Request
 
@@ -120,7 +120,39 @@ When opening a Pull Request:
 
 ---
 
-## 5. Release Process (Maintainers Only)
+## 5. Continuous integration
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every push and pull request to `main` and `development`. A new push cancels the previous run for that ref.
+
+Node is `24.22.0`, the same pin as [`.nvmrc`](.nvmrc). Install uses `pnpm install --frozen-lockfile`.
+
+The Lint, Typecheck, Format, and Build jobs run the same commands as [Step 4](#step-4-validate-code-quality).
+
+| Job               | What it does                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------- |
+| Install           | Installs dependencies and caches `node_modules`                                                   |
+| Lint              | `pnpm lint`                                                                                       |
+| Typecheck         | `pnpm typecheck`                                                                                  |
+| Format            | `pnpm format:check`                                                                               |
+| Build             | `pnpm build`                                                                                      |
+| Secret scanning   | Gitleaks on the git history                                                                       |
+| CodeQL            | JavaScript and TypeScript security queries                                                        |
+| Dependency review | Pull requests only. `continue-on-error` is set, so a finding does not fail the workflow by itself |
+| Security audit    | `pnpm audit --audit-level=high`                                                                   |
+
+The build job receives `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, and `NEXT_PUBLIC_SENTRY_DSN` from GitHub secrets. It does not receive `DATABASE_URL` or the admin auth variables. CI does not run `pnpm db:migrate` or `pnpm db:deploy`.
+
+| Workflow                                                             | When                                                 | What                                                                                                                      |
+| -------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| [`validate-pr-target.yml`](.github/workflows/validate-pr-target.yml) | Pull request into `main`                             | The branch must be `development`, the author must be the repository owner, and the pull request must not come from a fork |
+| [`dependency-audit.yml`](.github/workflows/dependency-audit.yml)     | Mondays at 09:00 UTC, pull requests, and manual runs | `pnpm audit --audit-level=high`                                                                                           |
+| [`lighthouse.yml`](.github/workflows/lighthouse.yml)                 | Pull requests to `main` and `development`            | Builds the app, starts it, and runs Lighthouse against `http://localhost:3000`                                            |
+
+How to report a vulnerability is in [`SECURITY.md`](SECURITY.md).
+
+---
+
+## 6. Release Process (Maintainers Only)
 
 1. PRs are reviewed and merged into `development`.
 2. A promotion PR is created from `development` → `main`.

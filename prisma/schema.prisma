@@ -10,11 +10,159 @@ datasource db {
   provider = "postgresql"
 }
 
-// Temporary smoke-test model — replace with real domain models when ready.
-model Test {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+// Admin-panel accounts only. There is no public customer role.
+// `password` stores a hash, never the plain password.
+// A SUPER_ADMIN creates ADMIN rows in application code; the enum only limits the allowed values.
+enum UserRole {
+  ADMIN
+  SUPER_ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid()) @map("id")
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+enum PlotStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+}
+
+enum FlatPropertyType {
+  RESIDENTIAL
+  COMMERCIAL
+  BOTH
+}
+
+enum FlatConstructionStatus {
+  READY
+  UNDER_CONSTRUCTION
+  UPCOMING
+}
+
+model Plot {
+  id                  String      @id @default(uuid())
+  name                String      @unique @db.VarChar(120)
+  title               String      @db.VarChar(160)
+  description         String      @db.VarChar(20000)
+  slug                String      @unique @db.VarChar(160)
+  shortIntro          String      @default("") @map("short_intro") @db.VarChar(150)
+  facilities          String[]    @default([])
+  address             String      @db.VarChar(500)
+  district            String      @db.VarChar(120)
+  landmark            String      @default("") @db.VarChar(500)
+  shotangshoPrice     String      @map("shotangsho_price") @db.VarChar(120)
+  landAreaSize        String      @map("land_area_size") @db.VarChar(120)
+  driveLink           String      @default("") @map("drive_link") @db.VarChar(2000)
+  youtubeVideoUrl     String      @default("") @map("youtube_video_url") @db.VarChar(2000)
+  mapEmbedLink        String      @default("") @map("map_embed_link") @db.VarChar(2000)
+  specialOffer        String      @default("") @map("special_offer") @db.VarChar(200)
+  published           Boolean     @default(false)
+  isFeatured          Boolean     @default(false) @map("is_featured")
+  status              PlotStatus  @default(AVAILABLE)
+  installmentFacility String?     @map("installment_facility") @db.VarChar(500)
+  createdAt           DateTime    @default(now()) @map("created_at")
+  updatedAt           DateTime    @updatedAt @map("updated_at")
+  images              PlotImage[]
+
+  @@index([published])
+  @@map("plots")
+}
+
+model PlotImage {
+  id        String   @id @default(uuid())
+  plotId    String   @map("plot_id")
+  imageUrl  String   @map("image_url") @db.VarChar(2000)
+  sortOrder Int      @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  plot      Plot     @relation(fields: [plotId], references: [id], onDelete: Cascade)
+
+  @@index([plotId])
+  @@map("plot_images")
+}
+
+model Flat {
+  id                  String                 @id @default(uuid())
+  name                String                 @unique @db.VarChar(120)
+  title               String                 @db.VarChar(160)
+  slug                String                 @unique @db.VarChar(160)
+  propertyType        FlatPropertyType       @map("property_type")
+  address             String                 @db.VarChar(500)
+  district            String                 @db.VarChar(120)
+  description         String                 @db.VarChar(20000)
+  shortIntro          String                 @default("") @map("short_intro") @db.VarChar(150)
+  buildingTotalFloors Int                    @map("building_total_floors")
+  pricePerSqft        String                 @map("price_per_sqft") @db.VarChar(120)
+  landmark            String                 @default("") @db.VarChar(500)
+  facilities          String[]               @default([])
+  specialOffer        String                 @default("") @map("special_offer") @db.VarChar(200)
+  status              PlotStatus             @default(AVAILABLE)
+  constructionStatus  FlatConstructionStatus @map("construction_status")
+  handoverDate        String                 @default("") @map("handover_date") @db.VarChar(120)
+  driveLink           String                 @default("") @map("drive_link") @db.VarChar(2000)
+  youtubeVideoUrl     String                 @default("") @map("youtube_video_url") @db.VarChar(2000)
+  mapEmbedLink        String                 @default("") @map("map_embed_link") @db.VarChar(2000)
+  isFeatured          Boolean                @default(false) @map("is_featured")
+  published           Boolean                @default(false)
+  installmentFacility String?                @map("installment_facility") @db.VarChar(500)
+  createdAt           DateTime               @default(now()) @map("created_at")
+  updatedAt           DateTime               @updatedAt @map("updated_at")
+  images              FlatImage[]
+
+  @@index([published])
+  @@map("flats")
+}
+
+model FlatImage {
+  id        String   @id @default(uuid())
+  flatId    String   @map("flat_id")
+  imageUrl  String   @map("image_url") @db.VarChar(2000)
+  sortOrder Int      @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  flat      Flat     @relation(fields: [flatId], references: [id], onDelete: Cascade)
+
+  @@index([flatId])
+  @@map("flat_images")
+}
+
+// Singleton row (id = "default") for the home hero marquee notice.
+model SiteNotice {
+  id        String   @id @default("default")
+  message   String   @db.VarChar(200)
+  isEnabled Boolean  @default(true) @map("is_enabled")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("site_notices")
+}
+
+// Singleton row for the three editable homepage hero statistics.
+model HeroStats {
+  id               String   @id @default("default")
+  plotsSold        String   @map("plots_sold") @db.VarChar(20)
+  happyClients     String   @map("happy_clients") @db.VarChar(20)
+  propertiesListed String   @map("properties_listed") @db.VarChar(20)
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("hero_stats")
+}
+
+// Singleton row for admin-editable public contact details.
+model SiteContact {
+  id             String   @id @default("default")
+  primaryPhone   String   @map("primary_phone") @db.VarChar(20)
+  secondaryPhone String   @map("secondary_phone") @db.VarChar(20)
+  whatsapp       String   @db.VarChar(20)
+  email          String   @db.VarChar(254)
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("site_contacts")
 }

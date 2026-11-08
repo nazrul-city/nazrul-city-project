@@ -19,3 +19,6 @@ audit:
     # patched version yet. Only reaches us via eslint-config-next + shadcn CLI
     # (dev tooling), not production runtime.
     - GHSA-vfj7-8cjw-p6xm
+
+patchedDependencies:
+  next-themes@0.4.6: patches/next-themes@0.4.6.patch

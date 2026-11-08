@@ -1,7 +1,12 @@
 import { SectionLayout } from '@/components/layout';
+import { getSiteContact } from '@/config/site-contact';
 import { FaqTabs } from '@/features/landing-page/components/faq-section/faq-tabs';
+import { buildFaqGroups } from '@/features/landing-page/constants/faqs';
 
-export function FaqSection() {
+export async function FaqSection() {
+  const contact = await getSiteContact();
+  const groups = buildFaqGroups(contact.primaryPhone);
+
   return (
     <SectionLayout id="faq" aria-labelledby="faq-heading">
       <div className="mx-auto max-w-3xl">
@@ -11,7 +16,7 @@ export function FaqSection() {
         <p className="mt-2 text-center text-sm font-medium text-muted-foreground">
           আমাদের সার্ভিস ও সহযোগিতা সম্পর্কে সর্বাধিক জিজ্ঞাসিত কিছু প্রশ্নের উত্তর এখানে পাবেন।
         </p>
-        <FaqTabs />
+        <FaqTabs groups={groups} />
       </div>
     </SectionLayout>
   );

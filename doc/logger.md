@@ -6,6 +6,8 @@ Server-only structured logging for the Nazrul City Next.js App Router app.
 **Config:** `LOG_LEVEL` in [`src/config/env/server.ts`](../src/config/env/server.ts)  
 **Example usage:** [`src/app/api/health/route.ts`](../src/app/api/health/route.ts)
 
+See also: [API Error Handling](./errors.md)
+
 ---
 
 ## Goals
@@ -275,11 +277,11 @@ Do **not** enable `pino-pretty` in production — it slows the process and break
 
 ## Related files
 
-| File                                                                      | Purpose                  |
-| ------------------------------------------------------------------------- | ------------------------ |
-| [`src/lib/logger.ts`](../src/lib/logger.ts)                               | Logger implementation    |
-| [`src/config/env/server.ts`](../src/config/env/server.ts)                 | `LOG_LEVEL` validation   |
-| [`.env.example`](../.env.example)                                         | Env documentation        |
-| [`next.config.ts`](../next.config.ts)                                     | `serverExternalPackages` |
-| [`src/app/api/health/route.ts`](../src/app/api/health/route.ts)           | Reference Route Handler  |
-| [`src/app/api/health/[id]/route.ts`](../src/app/api/health/[id]/route.ts) | Reference dynamic route  |
+| File                                                            | Purpose                  |
+| --------------------------------------------------------------- | ------------------------ |
+| [`src/lib/logger.ts`](../src/lib/logger.ts)                     | Logger implementation    |
+| [`src/config/env/server.ts`](../src/config/env/server.ts)       | `LOG_LEVEL` validation   |
+| [`.env.example`](../.env.example)                               | Env documentation        |
+| [`next.config.ts`](../next.config.ts)                           | `serverExternalPackages` |
+| [`src/app/api/health/route.ts`](../src/app/api/health/route.ts) | Reference Route Handler  |
+| [`doc/errors.md`](./errors.md)                                  | API error handling       |
