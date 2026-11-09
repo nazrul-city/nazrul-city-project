@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { defineConfig, env } from 'prisma/config';
+import { defineConfig } from 'prisma/config';
 
 /**
  * Prisma ORM CLI config only (generate / migrate / studio).
@@ -18,6 +18,10 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
   datasource: {
-    url: env('DATABASE_URL'),
+    // Provide a fallback placeholder so `prisma generate` and CI builds succeed
+    // without requiring a live database connection or runtime secrets.
+    url:
+      // eslint-disable-next-line no-process-env
+      process.env.DATABASE_URL || 'postgresql://placeholder:placeholder@localhost:5432/placeholder',
   },
 });
