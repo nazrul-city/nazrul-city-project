@@ -4,11 +4,8 @@ export const SITE_CONFIG = {
   description:
     'রিয়েল এস্টেট ব্যবসা — যাচাই করা জমি, প্লট ও ফ্ল্যাট কেনা-বেচা, সৎ দাম এবং পরিষ্কার কাগজপত্রসহ।',
   contact: {
-    phones: ['01837777777', '01910100100'],
-    email: 'info@nazrulcity.com',
     // address: 'Nijhum Plaza, 105 A.B. Guha Road, Ganginarpar, Mymensingh 2200, Bangladesh',
     address: 'নিঝুম প্লাজা, ১০৫ এ.বি. গুহ রোড, গাঙ্গিনার পার রোড, ময়মনসিংহ ২২০০, বাংলাদেশ',
-    whatsapp: '01910100100',
     hours: {
       days: 'প্রতিদিন',
       time: 'সকাল ৮:০০ টা থেকে রাত ১১:০০ টা পর্যন্ত',
@@ -28,7 +25,7 @@ export const SITE_CONFIG = {
 export const PUBLIC_NAV_ITEMS = [
   { label: 'আমাদের সম্পর্কে', href: '/about-us' },
   { label: 'সেবাসমূহ', href: '#services' },
-  { label: 'প্লট ও ফ্ল্যাট', href: '#projects' },
+  { label: 'প্লট', href: '/plots' },
+  { label: 'ফ্ল্যাট', href: '/flats' },
   { label: 'কাজের পদ্ধতি', href: '#how-we-work' },
-  { label: 'যোগাযোগ', href: '#contact' },
 ] as const;

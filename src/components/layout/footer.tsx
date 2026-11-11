@@ -4,14 +4,22 @@ import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { SocialIcon, type TSocialIcon } from '@/components/shared/social-icon';
 import { buttonVariants } from '@/components/ui/button';
 import { PUBLIC_NAV_ITEMS, SITE_CONFIG } from '@/config/site';
+import { getSiteContact } from '@/config/site-contact';
 import { cn } from '@/lib/utils';
 import { resolvePublicHref } from '@/utils/public-href';
+import { buildWhatsAppHref } from '@/utils/whatsapp-href';
 
 type TFooterProps = {
   className?: string;
 };
 
-const SOCIAL_LINKS_DUMMY_DATA = [
+type TSocialLink = {
+  label: string;
+  href: string;
+  icon: TSocialIcon;
+};
+
+const STATIC_SOCIAL_LINKS = [
   {
     label: 'Facebook',
     href: SITE_CONFIG.social.facebook,
@@ -27,24 +35,24 @@ const SOCIAL_LINKS_DUMMY_DATA = [
     href: SITE_CONFIG.social.youtube,
     icon: 'youtube',
   },
-  {
-    label: 'WhatsApp',
-    href: `https://wa.me/${SITE_CONFIG.contact.whatsapp}`,
-    icon: 'whatsapp',
-  },
-] as const satisfies readonly {
-  label: string;
-  href: string;
-  icon: TSocialIcon;
-}[];
+] as const satisfies readonly TSocialLink[];
 
 const LEGAL_LINKS = [
   { label: 'গোপনীয়তা নীতি', href: '#' },
   { label: 'নীতিমালা', href: '#' },
 ] as const;
 
-export function Footer({ className }: Readonly<TFooterProps>) {
+export async function Footer({ className }: Readonly<TFooterProps>) {
   const year = new Date().getFullYear();
+  const contact = await getSiteContact();
+  const phones = [
+    { id: 'primary', phone: contact.primaryPhone },
+    { id: 'secondary', phone: contact.secondaryPhone },
+  ] as const;
+  const socialLinks: readonly TSocialLink[] = [
+    ...STATIC_SOCIAL_LINKS,
+    { label: 'WhatsApp', href: buildWhatsAppHref(contact.whatsapp), icon: 'whatsapp' },
+  ];
 
   return (
     <footer className={cn('w-full rounded-t-3xl border-t border-border/50 bg-muted', className)}>
@@ -55,20 +63,20 @@ export function Footer({ className }: Readonly<TFooterProps>) {
               href="/"
               className="group flex w-fit items-center gap-2.5 text-foreground transition-opacity hover:opacity-90"
             >
-              <span className="flex size-12 items-center justify-center rounded-lg p-0.5 shadow-xs transition-transform duration-200 group-hover:scale-105">
+              <span className="relative size-16 shrink-0 transition-transform duration-200 group-hover:scale-105">
                 <Image
                   src="/images/nc-logo.png"
-                  alt="Nazrul City Logo"
-                  className="hidden h-10 w-10 object-contain dark:block"
-                  width={32}
-                  height={32}
+                  alt=""
+                  fill
+                  sizes="64px"
+                  className="hidden object-contain dark:block"
                 />
                 <Image
                   src="/images/nc-logo-dark.png"
-                  alt="Nazrul City Logo"
-                  className="block h-10 w-10 object-contain dark:hidden"
-                  width={32}
-                  height={32}
+                  alt="Nazrul City"
+                  fill
+                  sizes="64px"
+                  className="object-contain dark:hidden"
                 />
               </span>
               <span className="flex flex-col">
@@ -110,8 +118,8 @@ export function Footer({ className }: Readonly<TFooterProps>) {
           <div>
             <h3>যোগাযোগ </h3>
             <ul className="mt-4 flex flex-col gap-1">
-              {SITE_CONFIG.contact.phones.map((phone) => (
-                <li key={phone}>
+              {phones.map(({ id, phone }) => (
+                <li key={id}>
                   <a
                     href={`tel:${phone}`}
                     aria-label={`Call ${phone}`}
@@ -124,12 +132,12 @@ export function Footer({ className }: Readonly<TFooterProps>) {
               ))}
               <li>
                 <a
-                  href={`mailto:${SITE_CONFIG.contact.email}`}
-                  aria-label={`Email ${SITE_CONFIG.contact.email}`}
+                  href={`mailto:${contact.email}`}
+                  aria-label={`Email ${contact.email}`}
                   className="inline-flex items-center gap-2 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <Mail className="size-3.5 shrink-0 text-primary" aria-hidden="true" />
-                  <span>{SITE_CONFIG.contact.email}</span>
+                  <span>{contact.email}</span>
                 </a>
               </li>
               <li className="flex items-start gap-2 py-1 text-sm text-muted-foreground">
@@ -143,7 +151,7 @@ export function Footer({ className }: Readonly<TFooterProps>) {
             <h3>অনুসরণ করুন</h3>
 
             <ul className="mt-4 flex flex-wrap gap-2">
-              {SOCIAL_LINKS_DUMMY_DATA.map((item) => (
+              {socialLinks.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}

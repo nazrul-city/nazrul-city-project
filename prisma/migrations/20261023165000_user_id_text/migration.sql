@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "users" DROP CONSTRAINT "users_pkey",
+ALTER COLUMN "id" DROP DEFAULT,
+ALTER COLUMN "id" SET DATA TYPE TEXT,
+ADD CONSTRAINT "users_pkey" PRIMARY KEY ("id");
+DROP SEQUENCE "users_id_seq";

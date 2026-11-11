@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { env } from '@/config/env';
+import { redactSentryEvent } from '@/utils/redact-connection-url';
 
 Sentry.init({
   dsn: env.SENTRY_DSN || env.NEXT_PUBLIC_SENTRY_DSN,
@@ -16,4 +17,8 @@ Sentry.init({
 
   // Enable debug mode only when explicitly troubleshooting
   debug: false,
+
+  beforeSend(event) {
+    return redactSentryEvent(event);
+  },
 });

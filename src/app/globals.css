@@ -266,6 +266,43 @@
     font-size: var(--heading-6);
     line-height: 1.4;
   }
+
+  /*
+    Headings inside a project description stay body-sized.
+    The h2 and h3 scale above is for page sections. A heading pasted into a
+    description would otherwise look like a page title.
+  */
+  .rich-text h2,
+  .rich-text h3 {
+    line-height: var(--text-base--line-height);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .rich-text h2 {
+    font-size: var(--heading-3);
+  }
+
+  .rich-text h3 {
+    font-size: var(--heading-4);
+  }
+
+  .rich-text ul {
+    list-style: disc;
+    padding-left: calc(var(--spacing) * 5);
+  }
+  .rich-text ol {
+    list-style: decimal;
+    padding-left: calc(var(--spacing) * 5);
+  }
+  .rich-text ul,
+  .rich-text ol,
+  .rich-text p + p {
+    margin-top: calc(var(--spacing) * 3);
+  }
+  .rich-text a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
 }
 
 /*

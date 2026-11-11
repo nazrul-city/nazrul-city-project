@@ -4,9 +4,12 @@ export {
   type THeroPropertyCard,
 } from './components/hero-section/hero-section';
 
+export { getFeaturedHeroProject } from './queries';
+
 export {
   HeroStats,
   DEFAULT_HERO_STATS,
+  buildHeroStatItems,
   type THeroStatsProps,
   type THeroStatItem,
 } from './components/hero-section/hero-stats';

@@ -1,3 +1,4 @@
-# pre-commit: Run lint-staged on all staged files.
-# Aborts the commit if linting or formatting fails.
+# pre-commit: lint-staged, then validate Prisma schema.
+# Runs before commit-msg. Aborts the commit on failure.
 pnpm exec lint-staged
+pnpm db:validate

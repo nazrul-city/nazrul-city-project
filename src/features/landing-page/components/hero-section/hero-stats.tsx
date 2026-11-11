@@ -1,5 +1,8 @@
 import type { LucideIcon } from 'lucide-react';
 import { Award, Building2, Home, Users } from 'lucide-react';
+import { HERO_STATS_DEFAULTS } from '@/features/hero-stats/constants';
+import { readYearsSinceFounding } from '@/features/hero-stats/utils/read-years-since-founding';
+import type { THeroStatsValues } from '@/features/hero-stats/queries';
 import { cn } from '@/lib/utils';
 
 export type THeroStatItem = {
@@ -14,32 +17,51 @@ export type THeroStatsProps = {
   className?: string;
 };
 
-export const DEFAULT_HERO_STATS: readonly THeroStatItem[] = [
-  {
-    id: 'plots-sold',
-    label: 'বিক্রিত প্লট',
-    value: '২৫০+',
-    icon: Home,
-  },
-  {
-    id: 'happy-clients',
-    label: 'সন্তুষ্ট গ্রাহক',
-    value: '৯৮০+',
-    icon: Users,
-  },
-  {
-    id: 'properties-listed',
-    label: 'তালিকাভুক্ত সম্পত্তি',
-    value: '৮৫০+',
-    icon: Building2,
-  },
-  {
-    id: 'experiences',
-    label: '2020 সাল থেকে শুরু',
-    value: '6+ বছর',
-    icon: Award,
-  },
-] as const;
+type TBuildHeroStatItemsInput = THeroStatsValues & {
+  yearsSinceFounding?: string;
+};
+
+/** Builds the four homepage hero tiles from DB values + computed years. */
+export function buildHeroStatItems({
+  plotsSold,
+  happyClients,
+  propertiesListed,
+  yearsSinceFounding = readYearsSinceFounding(),
+}: TBuildHeroStatItemsInput): readonly THeroStatItem[] {
+  return [
+    {
+      id: 'plots-sold',
+      label: 'বিক্রিত প্লট',
+      value: plotsSold,
+      icon: Home,
+    },
+    {
+      id: 'happy-clients',
+      label: 'সন্তুষ্ট গ্রাহক',
+      value: happyClients,
+      icon: Users,
+    },
+    {
+      id: 'properties-listed',
+      label: 'তালিকাভুক্ত সম্পত্তি',
+      value: propertiesListed,
+      icon: Building2,
+    },
+    {
+      id: 'experiences',
+      label: '২০২০ সাল থেকে শুরু',
+      value: yearsSinceFounding,
+      icon: Award,
+    },
+  ] as const;
+}
+
+/** Fallback if a caller omits `stats` (prefer building from the page). */
+export const DEFAULT_HERO_STATS: readonly THeroStatItem[] = buildHeroStatItems({
+  plotsSold: HERO_STATS_DEFAULTS.plotsSold,
+  happyClients: HERO_STATS_DEFAULTS.happyClients,
+  propertiesListed: HERO_STATS_DEFAULTS.propertiesListed,
+});
 
 export function HeroStats({ stats = DEFAULT_HERO_STATS, className }: Readonly<THeroStatsProps>) {
   return (
