@@ -90,7 +90,7 @@ export async function Footer({ className }: Readonly<TFooterProps>) {
               {SITE_CONFIG.description}
             </p>
             <Link
-              href="/projects"
+              href="/plots"
               className={cn(buttonVariants({ size: 'sm' }), 'mt-1 w-fit gap-1.5')}
             >
               <span>প্লট ও ফ্ল্যাট দেখুন</span>
