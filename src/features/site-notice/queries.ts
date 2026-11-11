@@ -12,25 +12,32 @@ export type TSiteNotice = {
 };
 
 export async function getSiteNotice(): Promise<TSiteNotice> {
-  const notice = await prisma.siteNotice.findUnique({
-    where: { id: 'default' },
-    select: {
-      message: true,
-      isEnabled: true,
-    },
-  });
+  try {
+    const notice = await prisma.siteNotice.findUnique({
+      where: { id: 'default' },
+      select: {
+        message: true,
+        isEnabled: true,
+      },
+    });
 
-  if (!notice) {
+    if (!notice) {
+      return {
+        message: SITE_NOTICE_DEFAULTS.message,
+        isEnabled: SITE_NOTICE_DEFAULTS.isEnabled,
+      };
+    }
+
+    return {
+      message: notice.message,
+      isEnabled: notice.isEnabled,
+    };
+  } catch {
     return {
       message: SITE_NOTICE_DEFAULTS.message,
       isEnabled: SITE_NOTICE_DEFAULTS.isEnabled,
     };
   }
-
-  return {
-    message: notice.message,
-    isEnabled: notice.isEnabled,
-  };
 }
 
 export async function getSiteNoticeFormValues(): Promise<TSiteNoticeFormValues> {

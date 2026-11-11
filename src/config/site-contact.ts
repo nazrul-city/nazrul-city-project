@@ -20,15 +20,19 @@ export type TSiteContact = {
 };
 
 export const getSiteContact = cache(async (): Promise<TSiteContact> => {
-  const contact = await prisma.siteContact.findUnique({
-    where: { id: SITE_CONTACT_ID },
-    select: {
-      primaryPhone: true,
-      secondaryPhone: true,
-      whatsapp: true,
-      email: true,
-    },
-  });
+  try {
+    const contact = await prisma.siteContact.findUnique({
+      where: { id: SITE_CONTACT_ID },
+      select: {
+        primaryPhone: true,
+        secondaryPhone: true,
+        whatsapp: true,
+        email: true,
+      },
+    });
 
-  return contact ?? { ...SITE_CONTACT_DEFAULTS };
+    return contact ?? { ...SITE_CONTACT_DEFAULTS };
+  } catch {
+    return { ...SITE_CONTACT_DEFAULTS };
+  }
 });

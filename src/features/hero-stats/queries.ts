@@ -11,28 +11,36 @@ export type THeroStatsValues = {
 };
 
 export async function getHeroStats(): Promise<THeroStatsValues> {
-  const stats = await prisma.heroStats.findUnique({
-    where: { id: HERO_STATS_ID },
-    select: {
-      plotsSold: true,
-      happyClients: true,
-      propertiesListed: true,
-    },
-  });
+  try {
+    const stats = await prisma.heroStats.findUnique({
+      where: { id: HERO_STATS_ID },
+      select: {
+        plotsSold: true,
+        happyClients: true,
+        propertiesListed: true,
+      },
+    });
 
-  if (!stats) {
+    if (!stats) {
+      return {
+        plotsSold: HERO_STATS_DEFAULTS.plotsSold,
+        happyClients: HERO_STATS_DEFAULTS.happyClients,
+        propertiesListed: HERO_STATS_DEFAULTS.propertiesListed,
+      };
+    }
+
+    return {
+      plotsSold: stats.plotsSold,
+      happyClients: stats.happyClients,
+      propertiesListed: stats.propertiesListed,
+    };
+  } catch {
     return {
       plotsSold: HERO_STATS_DEFAULTS.plotsSold,
       happyClients: HERO_STATS_DEFAULTS.happyClients,
       propertiesListed: HERO_STATS_DEFAULTS.propertiesListed,
     };
   }
-
-  return {
-    plotsSold: stats.plotsSold,
-    happyClients: stats.happyClients,
-    propertiesListed: stats.propertiesListed,
-  };
 }
 
 export async function getHeroStatsFormValues(): Promise<THeroStatsFormValues> {

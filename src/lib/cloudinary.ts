@@ -1,5 +1,4 @@
 import 'server-only';
-
 import { createHash } from 'node:crypto';
 import { logger } from '@/lib/logger';
 import { env } from '@/config/env';
@@ -8,6 +7,19 @@ export type TDestroyImageResult = {
   ok: boolean;
   message?: string;
 };
+
+/**
+ * Cloudinary public IDs may contain letters, digits, underscores, hyphens,
+ * dots and forward slashes (for folder paths). Reject anything else to prevent
+ * parameter injection into the signature string.
+ */
+const CLOUDINARY_PUBLIC_ID_PATTERN = /^[a-zA-Z0-9_\-./]+$/;
+
+function isValidPublicId(publicId: string): boolean {
+  return (
+    publicId.length > 0 && publicId.length <= 512 && CLOUDINARY_PUBLIC_ID_PATTERN.test(publicId)
+  );
+}
 
 /**
  * Permanently deletes an image from Cloudinary CDN and invalidates edge caches.
@@ -26,10 +38,20 @@ export async function destroyCloudinaryImage(publicId: string): Promise<TDestroy
     };
   }
 
+  // Validate publicId before embedding it in the signature string to prevent
+  // parameter injection attacks.
+  if (!isValidPublicId(publicId)) {
+    logger.warn('cloudinary destroy called with invalid public_id; request rejected');
+    return {
+      ok: false,
+      message: 'Invalid image identifier.',
+    };
+  }
+
   const timestamp = Math.floor(Date.now() / 1000).toString();
-  // Cloudinary signatures require parameters in alphabetical order
+  // Cloudinary signatures require parameters in alphabetical order.
   const paramString = `invalidate=true&public_id=${publicId}&timestamp=${timestamp}`;
-  const signature = createHash('sha1').update(`${paramString}${apiSecret}`).digest('hex');
+  const signature = createHash('sha256').update(`${paramString}${apiSecret}`).digest('hex');
 
   const formData = new URLSearchParams({
     public_id: publicId,
@@ -48,7 +70,7 @@ export async function destroyCloudinaryImage(publicId: string): Promise<TDestroy
 
     if (!response.ok) {
       const errorText = await response.text();
-      logger.error(`cloudinary destroy error: ${errorText}`);
+      logger.error(`cloudinary destroy error: HTTP ${response.status.toString()}`);
 
       let errorMessage = 'Could not delete the image from Cloudinary.';
       try {
@@ -65,7 +87,7 @@ export async function destroyCloudinaryImage(publicId: string): Promise<TDestroy
           errorMessage = errorJson.error.message;
         }
       } catch {
-        // Use default fallback if not valid JSON
+        // Use default fallback if not valid JSON.
       }
 
       return { ok: false, message: errorMessage };
@@ -75,11 +97,11 @@ export async function destroyCloudinaryImage(publicId: string): Promise<TDestroy
     const result = typeof data === 'object' && data !== null && 'result' in data ? data.result : '';
 
     if (result === 'ok' || result === 'not found') {
-      logger.info(`cloudinary image deleted: ${publicId} (${result})`);
+      logger.info(`cloudinary image deleted (${String(result)})`);
       return { ok: true };
     }
 
-    logger.warn(`cloudinary destroy returned unexpected result: ${String(result)}`);
+    logger.warn('cloudinary destroy returned unexpected result');
     return { ok: false, message: 'Cloudinary could not delete the image.' };
   } catch (error) {
     if (error instanceof Error && error.name === 'TimeoutError') {

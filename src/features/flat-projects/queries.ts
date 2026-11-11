@@ -66,33 +66,37 @@ export async function getFlatFormValues(
 }
 
 export async function listPublishedFlats() {
-  const flats = await prisma.flat.findMany({
-    where: { published: true },
-    orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
-    select: {
-      slug: true,
-      name: true,
-      shortIntro: true,
-      status: true,
-      district: true,
-      pricePerSqft: true,
-      images: {
-        orderBy: { sortOrder: 'asc' },
-        take: 1,
-        select: { imageUrl: true },
+  try {
+    const flats = await prisma.flat.findMany({
+      where: { published: true },
+      orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
+      select: {
+        slug: true,
+        name: true,
+        shortIntro: true,
+        status: true,
+        district: true,
+        pricePerSqft: true,
+        images: {
+          orderBy: { sortOrder: 'asc' },
+          take: 1,
+          select: { imageUrl: true },
+        },
       },
-    },
-  });
+    });
 
-  return flats.map((flat) => ({
-    slug: flat.slug,
-    name: flat.name,
-    shortIntro: flat.shortIntro,
-    status: flat.status,
-    district: flat.district,
-    price: flat.pricePerSqft,
-    imageUrl: flat.images[0]?.imageUrl ?? null,
-  }));
+    return flats.map((flat) => ({
+      slug: flat.slug,
+      name: flat.name,
+      shortIntro: flat.shortIntro,
+      status: flat.status,
+      district: flat.district,
+      price: flat.pricePerSqft,
+      imageUrl: flat.images[0]?.imageUrl ?? null,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function getPublishedFlat(slug: string) {

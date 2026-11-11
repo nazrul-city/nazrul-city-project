@@ -8,9 +8,13 @@ type TRichTextProps = {
 
 export function RichText({ html }: Readonly<TRichTextProps>) {
   const safeHtml = sanitizeRichText(html);
-  const text = safeHtml.replace(/<[^>]+>/g, '').trim();
 
-  if (!text) {
+  // After sanitization only allowlisted tags remain, so stripping them with a
+  // simple regex to check for text content is safe and works in both browser
+  // and SSR (Node.js) environments. DOMParser is not available server-side.
+  const plain = safeHtml.replace(/<[^>]+>/g, '').trim();
+
+  if (!plain) {
     return null;
   }
 

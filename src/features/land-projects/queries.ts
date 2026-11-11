@@ -62,42 +62,50 @@ export async function getPlotFormValues(
 }
 
 export async function listPublishedPlots() {
-  const plots = await prisma.plot.findMany({
-    where: { published: true },
-    orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
-    select: {
-      slug: true,
-      name: true,
-      shortIntro: true,
-      status: true,
-      district: true,
-      shotangshoPrice: true,
-      images: {
-        orderBy: { sortOrder: 'asc' },
-        take: 1,
-        select: { imageUrl: true },
+  try {
+    const plots = await prisma.plot.findMany({
+      where: { published: true },
+      orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
+      select: {
+        slug: true,
+        name: true,
+        shortIntro: true,
+        status: true,
+        district: true,
+        shotangshoPrice: true,
+        images: {
+          orderBy: { sortOrder: 'asc' },
+          take: 1,
+          select: { imageUrl: true },
+        },
       },
-    },
-  });
+    });
 
-  return plots.map((plot) => ({
-    slug: plot.slug,
-    name: plot.name,
-    shortIntro: plot.shortIntro,
-    status: plot.status,
-    district: plot.district,
-    price: plot.shotangshoPrice,
-    imageUrl: plot.images[0]?.imageUrl ?? null,
-  }));
+    return plots.map((plot) => ({
+      slug: plot.slug,
+      name: plot.name,
+      shortIntro: plot.shortIntro,
+      status: plot.status,
+      district: plot.district,
+      price: plot.shotangshoPrice,
+      imageUrl: plot.images[0]?.imageUrl ?? null,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function getPublishedPlot(slug: string) {
-  return prisma.plot.findFirst({
-    where: { slug, published: true },
-    include: {
-      images: {
-        orderBy: { sortOrder: 'asc' },
+  try {
+    return await prisma.plot.findFirst({
+      where: { slug, published: true },
+      include: {
+        images: {
+          orderBy: { sortOrder: 'asc' },
+        },
       },
-    },
-  });
+    });
+  } catch {
+    return null;
+  }
 }

@@ -274,10 +274,18 @@
   */
   .rich-text h2,
   .rich-text h3 {
-    font-size: var(--text-base);
     line-height: var(--text-base--line-height);
     font-weight: var(--font-weight-semibold);
   }
+
+  .rich-text h2 {
+    font-size: var(--heading-3);
+  }
+
+  .rich-text h3 {
+    font-size: var(--heading-4);
+  }
+
   .rich-text ul {
     list-style: disc;
     padding-left: calc(var(--spacing) * 5);

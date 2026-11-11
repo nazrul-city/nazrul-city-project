@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { sanitizeRichText } from '@/utils/sanitize-rich-text';
 
 type TRichTextEditorProps = {
   id: string;
@@ -35,13 +36,25 @@ type TToolbarButtonProps = {
   children: ReactNode;
 };
 
+/**
+ * Returns the sanitized HTML when the editor contains visible text, or an
+ * empty string when the content is blank.
+ *
+ * Uses DOMParser to extract plain text — avoids the CodeQL
+ * "incomplete multi-character sanitization" warning that regex-based tag
+ * stripping triggers, because DOMParser correctly handles all edge cases
+ * (nested tags, attribute values, script content, etc.).
+ */
 function normalizeEditorHtml(html: string): string {
-  const text = html
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/gi, ' ')
-    .trim();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const plain = (doc.body.textContent ?? '').trim();
 
-  return text.length === 0 ? '' : html;
+  if (plain.length === 0) {
+    return '';
+  }
+
+  return sanitizeRichText(html);
 }
 
 function ToolbarButton({

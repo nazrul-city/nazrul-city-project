@@ -34,50 +34,54 @@ function toHeroPropertyCard(project: TFeaturedCandidate): THeroPropertyCard {
  * Returns null when nothing is featured — the hero hides the card then.
  */
 export async function getFeaturedHeroProject(): Promise<THeroPropertyCard | null> {
-  const [plot, flat] = await Promise.all([
-    prisma.plot.findFirst({
-      where: { published: true, isFeatured: true },
-      orderBy: { updatedAt: 'desc' },
-      select: {
-        name: true,
-        slug: true,
-        district: true,
-        shortIntro: true,
-        specialOffer: true,
-        updatedAt: true,
-      },
-    }),
-    prisma.flat.findFirst({
-      where: { published: true, isFeatured: true },
-      orderBy: { updatedAt: 'desc' },
-      select: {
-        name: true,
-        slug: true,
-        district: true,
-        shortIntro: true,
-        specialOffer: true,
-        updatedAt: true,
-      },
-    }),
-  ]);
+  try {
+    const [plot, flat] = await Promise.all([
+      prisma.plot.findFirst({
+        where: { published: true, isFeatured: true },
+        orderBy: { updatedAt: 'desc' },
+        select: {
+          name: true,
+          slug: true,
+          district: true,
+          shortIntro: true,
+          specialOffer: true,
+          updatedAt: true,
+        },
+      }),
+      prisma.flat.findFirst({
+        where: { published: true, isFeatured: true },
+        orderBy: { updatedAt: 'desc' },
+        select: {
+          name: true,
+          slug: true,
+          district: true,
+          shortIntro: true,
+          specialOffer: true,
+          updatedAt: true,
+        },
+      }),
+    ]);
 
-  const candidates: TFeaturedCandidate[] = [];
+    const candidates: TFeaturedCandidate[] = [];
 
-  if (plot) {
-    candidates.push({ kind: 'plot', ...plot });
-  }
+    if (plot) {
+      candidates.push({ kind: 'plot', ...plot });
+    }
 
-  if (flat) {
-    candidates.push({ kind: 'flat', ...flat });
-  }
+    if (flat) {
+      candidates.push({ kind: 'flat', ...flat });
+    }
 
-  if (candidates.length === 0) {
+    if (candidates.length === 0) {
+      return null;
+    }
+
+    const newest = candidates.reduce((current, next) =>
+      next.updatedAt > current.updatedAt ? next : current
+    );
+
+    return toHeroPropertyCard(newest);
+  } catch {
     return null;
   }
-
-  const newest = candidates.reduce((current, next) =>
-    next.updatedAt > current.updatedAt ? next : current
-  );
-
-  return toHeroPropertyCard(newest);
 }
