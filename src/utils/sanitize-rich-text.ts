@@ -94,11 +94,19 @@ function sanitizeBrowser(source: string): string {
 
 /** Server-side sanitization using a strict regex allowlist. */
 function sanitizeServer(source: string): string {
-  // Remove HTML comments and known dangerous block elements entirely.
-  const withoutDangerousBlocks = source
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/<\s*(script|style|iframe|object|embed)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
-    .replace(/<\s*(script|style|iframe|object|embed)\b[^>]*\/?>/gi, '');
+  // Apply all dangerous-content removals together in a fixed-point loop so
+  // that nested/interleaved patterns such as <!-<!---->-> or
+  // <scr<script>ipt> cannot survive any single replacement pass.
+  // CodeQL "incomplete multi-character sanitization" mitigation.
+  let withoutDangerousBlocks = source;
+  let previous: string;
+  do {
+    previous = withoutDangerousBlocks;
+    withoutDangerousBlocks = withoutDangerousBlocks
+      .replace(/<!--[\s\S]*?-->/g, '')
+      .replace(/<\s*(script|style|iframe|object|embed)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
+      .replace(/<\s*(script|style|iframe|object|embed)\b[^>]*\/?>/gi, '');
+  } while (withoutDangerousBlocks !== previous);
 
   return withoutDangerousBlocks.replace(
     /<\/?([a-zA-Z0-9]+)([^>]*)>/g,
