@@ -1,12 +1,14 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { BorderBeam } from '@/components/ui/border-beam';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
   FeaturedHeroCard,
   type TFeaturedHeroCardProps,
 } from '@/features/landing-page/components/hero-section/featured-hero-card';
+import { HeroCtaButton } from './hero-cta-button';
 import { HeroStats, type THeroStatItem } from './hero-stats';
 import { Marquee } from '@/components/shared/marquee';
 import type { TSiteNotice } from '@/features/site-notice/queries';
@@ -16,7 +18,7 @@ export type THeroPropertyCard = TFeaturedHeroCardProps;
 export type THeroSectionProps = {
   backgroundImageSrc?: string;
   eyebrow?: string;
-  title?: React.ReactNode;
+  title?: ReactNode;
   description?: string;
   ctaText?: string;
   ctaHref?: string;
@@ -83,12 +85,11 @@ export function HeroSection({
         <div className="relative mx-auto flex w-full max-w-6xl flex-col justify-between gap-10 px-4 pt-32 pb-20 md:flex-row md:items-end md:gap-8 md:px-6 md:pt-36 md:pb-24 lg:px-8 lg:pt-40 lg:pb-28">
           <div className="flex max-w-2xl flex-col items-start gap-5 md:max-w-xl lg:max-w-2xl">
             {eyebrow ? (
-              <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/80 px-3.5 py-1 text-xs font-medium text-foreground shadow-xs backdrop-blur-md">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-primary/70" />
-                </span>
-                <span>{eyebrow}</span>
+              <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.75 shadow-xs">
+                <BorderBeam />
+                <div className="relative inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/90 px-3.5 py-1 text-xs font-medium text-foreground backdrop-blur-md">
+                  <span className="font-semibold">{eyebrow}</span>
+                </div>
               </div>
             ) : null}
 
@@ -106,7 +107,7 @@ export function HeroSection({
             ) : null}
 
             <div className="pt-2">
-              <Link
+              <HeroCtaButton
                 href={ctaHref}
                 className={cn(
                   buttonVariants({
@@ -117,7 +118,7 @@ export function HeroSection({
               >
                 <span>{ctaText}</span>
                 <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:size-4" />
-              </Link>
+              </HeroCtaButton>
             </div>
           </div>
 

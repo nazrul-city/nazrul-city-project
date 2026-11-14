@@ -7,6 +7,7 @@ import {
   Megaphone,
   Phone,
   Shield,
+  Users,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -26,6 +27,7 @@ export const ADMIN_NAV_ITEMS = [
   { href: '/admin/site-notice', label: 'Hero notice', icon: Megaphone },
   { href: '/admin/hero-stats', label: 'Hero stats', icon: BarChart3 },
   { href: '/admin/contact', label: 'Website contact', icon: Phone },
+  { href: '/admin/team', label: 'Team photos', icon: Users },
 ] as const satisfies readonly TAdminNavItem[];
 
 export const ADMINS_NAV_ITEM = {
