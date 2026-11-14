@@ -8,6 +8,7 @@ import {
   ChairmanMessageSection,
   LeadershipSection,
   MissionVisionSection,
+  TeamSection,
   WorkAndTrustSection,
 } from '@/features/about-page';
 
@@ -29,6 +30,7 @@ export default function AboutPage() {
       <MissionVisionSection />
       <ChairmanMessageSection />
       <LeadershipSection />
+      <TeamSection />
       <AboutCtaSection />
     </div>
   );

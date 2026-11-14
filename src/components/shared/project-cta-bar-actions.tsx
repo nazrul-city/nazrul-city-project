@@ -29,7 +29,7 @@ export function ProjectCtaBarActions({
   const whatsappHref = buildWhatsAppHref(whatsapp);
 
   function handleWhatsAppClick(event: MouseEvent<HTMLAnchorElement>) {
-    const message = `আসসালামু আলাইকুম। আমি নাজরুল সিটির ওয়েবসাইট থেকে ${name} প্রকল্পটি দেখছি। এই প্রকল্প সম্পর্কে জানতে চাই।\n${window.location.href}`;
+    const message = `আসসালামু আলাইকুম। আমি নাজরুল সিটির ওয়েবসাইট থেকে ${name} প্রকল্পটি দেখেছি। এই প্রকল্প সম্পর্কে জানতে চাই।\n${window.location.href}`;
     event.currentTarget.href = buildWhatsAppHref(whatsapp, message);
   }
 

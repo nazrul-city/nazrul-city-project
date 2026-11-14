@@ -155,6 +155,17 @@ model HeroStats {
   @@map("hero_stats")
 }
 
+// Team photo carousel on the About page. Max 20 rows enforced in app code.
+model TeamImage {
+  id        String   @id @default(uuid())
+  caption   String   @db.VarChar(200)
+  imageUrl  String   @map("image_url") @db.VarChar(2000)
+  orderPos  Int      @map("order_pos")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("team_images")
+}
+
 // Singleton row for admin-editable public contact details.
 model SiteContact {
   id             String   @id @default("default")
