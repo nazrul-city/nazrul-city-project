@@ -177,3 +177,19 @@ model SiteContact {
 
   @@map("site_contacts")
 }
+
+// Top Facebook Reels on the Media page. Max 5 rows enforced in app code.
+model FacebookReel {
+  id           String   @id @default(uuid())
+  videoUrl     String   @map("video_url") @db.VarChar(2000)
+  thumbnailUrl String   @map("thumbnail_url") @db.VarChar(2000)
+  views        String   @db.VarChar(6)
+  duration     String   @db.VarChar(10)
+  caption      String   @default("") @db.VarChar(200)
+  priority     Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([priority])
+  @@map("facebook_reels")
+}
