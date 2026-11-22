@@ -15,12 +15,26 @@ import {
   type TUpdateFacebookReelResult,
   type TUpdateFacebookReelValues,
 } from './schemas/facebook-reel-schema';
+import {
+  addGalleryPhotoSchema,
+  type TAddGalleryPhotoResult,
+  type TAddGalleryPhotoValues,
+  type TCreateGalleryPhotoFormValues,
+  type TDeleteGalleryPhotoResult,
+} from './schemas/gallery-photo-schema';
 
 const DENIED = 'You must be signed in as an admin to manage Facebook reels.';
+const DENIED_GALLERY = 'You must be signed in as an admin to manage gallery photos.';
 
 function revalidate() {
   revalidatePath('/media');
   revalidatePath('/admin/facebook-reels');
+}
+
+function revalidateGallery() {
+  revalidatePath('/media');
+  revalidatePath('/media/gallery');
+  revalidatePath('/admin/gallery');
 }
 
 export async function addFacebookReelAction(
@@ -196,6 +210,82 @@ export async function reorderFacebookReelsAction(
   } catch (error) {
     const message = error instanceof Error ? error.message : 'রিলস সাজাতে ব্যর্থ হয়েছে।';
     logger.error(`reorderFacebookReelsAction error: ${message}`);
+    return { ok: false, message };
+  }
+}
+
+export async function addGalleryPhotoAction(
+  values: TAddGalleryPhotoValues
+): Promise<TAddGalleryPhotoResult> {
+  try {
+    const admin = await readActiveAdmin();
+    if (!admin) {
+      return { ok: false, message: DENIED_GALLERY };
+    }
+
+    const parsed = addGalleryPhotoSchema.safeParse(values);
+    if (!parsed.success) {
+      const fieldErrors: Partial<Record<keyof TCreateGalleryPhotoFormValues, string>> = {};
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0] as keyof TCreateGalleryPhotoFormValues;
+        fieldErrors[field] = issue.message;
+      }
+      return { ok: false, message: 'তথ্য যাচাইকরণ ব্যর্থ হয়েছে।', fieldErrors };
+    }
+
+    await prisma.galleryPhoto.create({
+      data: {
+        title: parsed.data.title,
+        dateTaken: parsed.data.dateTaken,
+        category: parsed.data.category,
+        imageUrl: parsed.data.imageUrl,
+      },
+    });
+
+    logger.info('gallery photo added');
+    revalidateGallery();
+    return { ok: true };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'ছবি যোগ করতে ব্যর্থ হয়েছে।';
+    logger.error(`addGalleryPhotoAction error: ${message}`);
+    return { ok: false, message };
+  }
+}
+
+export async function deleteGalleryPhotoAction(id: string): Promise<TDeleteGalleryPhotoResult> {
+  try {
+    const admin = await readActiveAdmin();
+    if (!admin) {
+      return { ok: false, message: DENIED_GALLERY };
+    }
+
+    const photo = await prisma.galleryPhoto.findUnique({
+      where: { id },
+    });
+
+    if (!photo) {
+      return { ok: false, message: 'এই ছবিটি খুঁজে পাওয়া যায়নি।' };
+    }
+
+    const publicId = extractCloudinaryPublicId(photo.imageUrl);
+    if (publicId) {
+      try {
+        await destroyCloudinaryImage(publicId);
+      } catch (cloudErr) {
+        logger.warn(`Could not destroy Cloudinary image for photo ${id}: ${cloudErr}`);
+      }
+    }
+
+    await prisma.galleryPhoto.delete({
+      where: { id },
+    });
+
+    logger.info(`gallery photo ${id} deleted`);
+    revalidateGallery();
+    return { ok: true };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'ছবি মুছতে ব্যর্থ হয়েছে।';
+    logger.error(`deleteGalleryPhotoAction error: ${message}`);
     return { ok: false, message };
   }
 }

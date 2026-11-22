@@ -1,13 +1,19 @@
 import Image from 'next/image';
 import { Play } from 'lucide-react';
 import { SectionLayout } from '@/components/layout';
+import type { TBreadcrumbItem } from '@/components/shared/page-breadcrumb';
+import { PageBreadcrumb } from '@/components/shared/page-breadcrumb';
 
 const HERO_IMAGE = {
   src: '/images/landing-page/hero-bg.jpeg',
   alt: 'নজরুল সিটির মনোরম প্রাকৃতিক দৃশ্য ও প্রকল্প এলাকা',
 } as const;
 
-export function MediaHeroSection() {
+type TMediaHeroSectionProps = {
+  breadcrumbs?: readonly TBreadcrumbItem[];
+};
+
+export function MediaHeroSection({ breadcrumbs }: Readonly<TMediaHeroSectionProps>) {
   return (
     <div className="relative mt-14 w-full overflow-hidden bg-background">
       {/* Background Aerial Project Image */}
@@ -27,9 +33,16 @@ export function MediaHeroSection() {
         />
       </div>
 
+      {/* Breadcrumb placed directly at the top of the Hero Banner */}
+      {breadcrumbs && breadcrumbs.length > 0 ? (
+        <div className="relative z-10 pt-6 md:pt-8">
+          <PageBreadcrumb items={breadcrumbs} className="mt-0 lg:mt-0" />
+        </div>
+      ) : null}
+
       <SectionLayout
         aria-labelledby="media-hero-heading"
-        className="relative z-10 pt-10 pb-16 md:pt-16 md:pb-24 lg:pt-20 lg:pb-28"
+        className="relative z-10 pt-6 pb-16 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28"
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           {/* Left Column: Media Badges & Headings */}

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import { FacebookReelsSection, MediaHero } from '@/features/media';
-import { getPublicFacebookReels } from '@/features/media/queries';
+import { FacebookReelsSection, MediaHero, PhotoGallerySection } from '@/features/media';
+import { getGalleryPreviewPhotos, getPublicFacebookReels } from '@/features/media/queries';
+
+const MEDIA_BREADCRUMB = [{ label: 'হোম', href: '/' }, { label: 'মিডিয়া' }] as const;
 
 export const metadata: Metadata = {
   title: 'মিডিয়া ও কার্যক্রম | নজরুল সিটি',
@@ -14,12 +16,16 @@ export const metadata: Metadata = {
 };
 
 export default async function MediaPage() {
-  const reels = await getPublicFacebookReels();
+  const [reels, previewPhotos] = await Promise.all([
+    getPublicFacebookReels(),
+    getGalleryPreviewPhotos(),
+  ]);
 
   return (
     <div className="flex flex-col">
-      <MediaHero />
+      <MediaHero breadcrumbs={MEDIA_BREADCRUMB} />
       <FacebookReelsSection reels={reels} />
+      <PhotoGallerySection photos={previewPhotos} />
     </div>
   );
 }
