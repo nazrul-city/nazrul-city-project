@@ -1,5 +1,8 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { defineConfig } from 'prisma/config';
+
+// Load .env.local first (matching Next.js priority), then fall back to .env
+dotenv.config({ path: ['.env.local', '.env'] });
 
 /**
  * Prisma ORM CLI config only (generate / migrate / studio).

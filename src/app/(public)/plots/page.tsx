@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'প্লট',
   description:
-    'নাজরুল সিটির প্রকাশিত আবাসিক প্লট প্রকল্পগুলো দেখুন। আপনার পছন্দের প্লট বেছে নিয়ে বিস্তারিত জানুন।',
+    'নজরুল সিটির প্রকাশিত আবাসিক প্লট প্রকল্পগুলো দেখুন। আপনার পছন্দের প্লট বেছে নিয়ে বিস্তারিত জানুন।',
 };
 
 const PLOTS_BREADCRUMB = [{ label: 'হোম', href: '/' }, { label: 'প্লট' }] as const;
@@ -28,12 +28,14 @@ export default async function PlotsPage() {
         <header className="mx-auto flex max-w-prose flex-col items-center gap-2 text-center">
           <h1>প্লট</h1>
           <p className="text-base text-muted-foreground">
-            নাজরুল সিটির প্রকাশিত আবাসিক প্লট প্রকল্পগুলো দেখুন। আপনার পছন্দের প্লট বেছে নিয়ে
+            নজরুল সিটির প্রকাশিত আবাসিক প্লট প্রকল্পগুলো দেখুন। আপনার পছন্দের প্লট বেছে নিয়ে
             বিস্তারিত জানুন।
           </p>
         </header>
         {plots.length === 0 ? (
-          <p className="text-base text-muted-foreground">এখনও কোনো প্লট প্রকাশিত হয়নি।</p>
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border py-12 text-center text-muted-foreground">
+            <p className="text-sm md:text-base">এখনও কোনো প্লট প্রকাশিত হয়নি।</p>
+          </div>
         ) : (
           <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {plots.map((plot, index) => (

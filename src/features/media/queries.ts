@@ -6,6 +6,8 @@ import { GALLERY_PAGE_LIMIT, MEDIA_PREVIEW_PHOTO_COUNT } from './constants/galle
 import { GALLERY_CATEGORY_VALUES } from './schemas/gallery-photo-schema';
 import type { TFacebookReel } from './types/facebook-reel';
 import type { TCategoryFilter, TGalleryCategory, TGalleryPhoto } from './types/gallery-photo';
+import { MAX_PUBLISHED_PODCASTS } from './constants/podcasts';
+import type { TPodcast } from './types/podcast';
 
 export async function getPublicFacebookReels(): Promise<readonly TFacebookReel[]> {
   try {
@@ -102,5 +104,37 @@ export async function getAllAdminGalleryPhotos(): Promise<readonly TGalleryPhoto
     });
   } catch {
     return [];
+  }
+}
+
+export async function getPublicPodcasts(): Promise<readonly TPodcast[]> {
+  try {
+    return await prisma.podcast.findMany({
+      where: { published: true },
+      orderBy: { orderPos: 'asc' },
+      take: MAX_PUBLISHED_PODCASTS,
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function getAllAdminPodcasts(): Promise<readonly TPodcast[]> {
+  try {
+    return await prisma.podcast.findMany({
+      orderBy: { orderPos: 'asc' },
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function getPublishedPodcastCount(): Promise<number> {
+  try {
+    return await prisma.podcast.count({
+      where: { published: true },
+    });
+  } catch {
+    return 0;
   }
 }

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SectionLayout } from '@/components/layout/section-layout';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -41,7 +41,7 @@ export function PhotoGallerySection({ photos }: Readonly<TPhotoGallerySectionPro
           )}
         >
           <span>সকল ছবি দেখুন</span>
-          <ArrowUpRight className="size-4" aria-hidden="true" />
+          <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
       </div>
     </SectionLayout>

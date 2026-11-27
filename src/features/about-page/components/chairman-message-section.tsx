@@ -57,8 +57,10 @@ export function ChairmanMessageSection() {
                   className="object-contain object-left mix-blend-multiply dark:mix-blend-screen dark:invert"
                 />
               </div>
-              <p className="font-semibold text-foreground">চেয়ারম্যান</p>
-              <p className="text-sm text-muted-foreground">Nazrul City</p>
+              <p className="font-semibold text-muted-foreground">
+                লেঃ কর্ণেল মোঃ নজরুল ইসলাম (অবঃ)
+              </p>
+              <p className="text-sm font-semibold text-foreground">চেয়ারম্যান, নজরুল সিটি </p>
             </div>
 
             <blockquote className="hidden w-34 rounded-md bg-card p-3 shadow-md md:block">

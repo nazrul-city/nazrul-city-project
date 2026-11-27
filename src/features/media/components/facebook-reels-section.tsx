@@ -1,5 +1,8 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { SectionLayout } from '@/components/layout/section-layout';
+import { SocialIcon } from '@/components/shared/social-icon';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { FACEBOOK_REELS_PAGE_URL } from '../constants';
 import type { TFacebookReel } from '../types/facebook-reel';
 import { ReelsInteractiveGrid } from './reels-interactive-grid';
@@ -38,16 +41,20 @@ export function FacebookReelsSection({ reels }: Readonly<TFacebookReelsSectionPr
         <ReelsInteractiveGrid reels={reels} />
       )}
 
-      {/* "সব রিলস দেখুন" — appears after all cards so user sees it once they've browsed */}
-      <div className="mt-6 flex justify-center md:mt-8">
+      {/* Bottom CTA to Facebook Reels Page */}
+      <div className="mt-8 flex justify-center md:mt-10">
         <a
           href={FACEBOOK_REELS_PAGE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className={cn(
+            buttonVariants({ variant: 'default', size: 'default' }),
+            'min-h-11 gap-2 font-semibold'
+          )}
         >
-          সব রিলস দেখুন
-          <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+          <SocialIcon name="facebook" className="size-4" />
+          <span>আরও রিলস দেখুন</span>
+          <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
         </a>
       </div>
     </SectionLayout>

@@ -11,6 +11,11 @@ export { PhotoLightbox } from './components/photo-lightbox';
 export { DedicatedGalleryView } from './components/dedicated-gallery-view';
 export { GalleryCategorySelect } from './components/gallery-category-select';
 export { GalleryPagination } from './components/gallery-pagination';
+export { PodcastSection } from './components/podcast-section';
+export { PodcastCard } from './components/podcast-card';
+export { PodcastVideoModal } from './components/podcast-video-modal';
+export { PodcastMarqueeInteractive } from './components/podcast-marquee-interactive';
+export { MediaCtaSection } from './components/media-cta-section';
 
 export { MAX_FACEBOOK_REELS, FACEBOOK_REELS_PAGE_URL } from './constants';
 export {
@@ -19,6 +24,8 @@ export {
   MEDIA_PREVIEW_PHOTO_COUNT,
   GALLERY_PAGE_LIMIT,
 } from './constants/gallery';
+export { MAX_PUBLISHED_PODCASTS } from './constants/podcasts';
 
 export type { TFacebookReel } from './types/facebook-reel';
 export type { TGalleryPhoto, TGalleryCategory, TCategoryFilter } from './types/gallery-photo';
+export type { TPodcast } from './types/podcast';

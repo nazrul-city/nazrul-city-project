@@ -1,6 +1,16 @@
 import type { Metadata } from 'next';
-import { FacebookReelsSection, MediaHero, PhotoGallerySection } from '@/features/media';
-import { getGalleryPreviewPhotos, getPublicFacebookReels } from '@/features/media/queries';
+import {
+  FacebookReelsSection,
+  MediaCtaSection,
+  MediaHero,
+  PhotoGallerySection,
+  PodcastSection,
+} from '@/features/media';
+import {
+  getGalleryPreviewPhotos,
+  getPublicFacebookReels,
+  getPublicPodcasts,
+} from '@/features/media/queries';
 
 const MEDIA_BREADCRUMB = [{ label: 'হোম', href: '/' }, { label: 'মিডিয়া' }] as const;
 
@@ -16,9 +26,10 @@ export const metadata: Metadata = {
 };
 
 export default async function MediaPage() {
-  const [reels, previewPhotos] = await Promise.all([
+  const [reels, previewPhotos, podcasts] = await Promise.all([
     getPublicFacebookReels(),
     getGalleryPreviewPhotos(),
+    getPublicPodcasts(),
   ]);
 
   return (
@@ -26,6 +37,8 @@ export default async function MediaPage() {
       <MediaHero breadcrumbs={MEDIA_BREADCRUMB} />
       <FacebookReelsSection reels={reels} />
       <PhotoGallerySection photos={previewPhotos} />
+      <PodcastSection podcasts={podcasts} />
+      <MediaCtaSection />
     </div>
   );
 }

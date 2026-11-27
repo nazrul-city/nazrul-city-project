@@ -33,7 +33,7 @@ export function ReelCard({ reel, onSelect }: Readonly<TReelCardProps>) {
 
         {/* Center: Glassmorphic Play Button */}
         <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <span className="flex size-11 items-center justify-center rounded-full border border-white/60 bg-black/20 text-white shadow-md transition-all duration-300 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary sm:size-13">
+          <span className="flex size-11 items-center justify-center rounded-full bg-primary/80 text-white shadow-md transition-all duration-300 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary sm:size-13">
             <Play className="size-4.5 translate-x-0.5 fill-current sm:size-5" aria-hidden="true" />
           </span>
         </div>
@@ -55,14 +55,6 @@ export function ReelCard({ reel, onSelect }: Readonly<TReelCardProps>) {
           </span>
         </div>
       </div>
-
-      {/* Caption Section Below Video with Red Bar Indicator */}
-      {/* <div className="flex w-full items-center gap-2 border-t border-border/60 bg-muted/60 p-2.5 sm:p-3">
-        <span className="h-3.5 w-1 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-        <p className="line-clamp-1 text-xs font-medium text-foreground sm:text-sm">
-          {reel.caption || 'নজরুল সিটি রিলস'}
-        </p>
-      </div> */}
     </button>
   );
 }

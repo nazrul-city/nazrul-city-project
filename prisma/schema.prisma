@@ -217,3 +217,23 @@ model GalleryPhoto {
   @@index([createdAt])
   @@map("gallery_photos")
 }
+
+// Client podcasts and video interviews on the Media page. Max 10 published shown publicly.
+model Podcast {
+  id                String   @id @default(uuid())
+  title             String   @db.VarChar(200)
+  youtubeUrl        String   @map("youtube_url") @db.VarChar(2000)
+  thumbnailUrl      String   @map("thumbnail_url") @db.VarChar(2000)
+  duration          String   @db.VarChar(20)
+  orderPos          Int      @default(0) @map("order_pos")
+  published         Boolean  @default(true)
+  clientName        String?  @default("") @map("client_name") @db.VarChar(120)
+  clientDesignation String?  @default("") @map("client_designation") @db.VarChar(120)
+  projectName       String?  @default("") @map("project_name") @db.VarChar(120)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@index([orderPos])
+  @@index([published])
+  @@map("podcasts")
+}
