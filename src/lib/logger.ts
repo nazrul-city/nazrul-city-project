@@ -114,7 +114,7 @@ const rootLogger = pino({
 function sanitizeLogMessage(value: string): string {
   return (
     value
-      .replace(/[\r\n]+/g, ' ')
+      .replace(/\r|\n/g, ' ')
       // Strip C0 control characters (except tab) and DEL.
       .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
   );
@@ -123,31 +123,30 @@ function sanitizeLogMessage(value: string): string {
 /**
  * Log a message safely.
  *
- * The message is passed as a structured object field rather than as a raw
- * format string. This prevents log-injection if the message contains
- * newlines or pino format tokens, and satisfies CodeQL's "log injection"
- * query (the message is a serialized JSON value, never interpolated).
+ * The message is passed as a structured object field (`messageKey: 'message'`)
+ * rather than as a raw format string. This prevents log-injection if the
+ * message contains newlines or pino format tokens, and satisfies CodeQL's
+ * "log injection" query (the message is a serialized JSON value, never interpolated).
  */
 function writeLog(level: 'info' | 'warn' | 'error' | 'fatal', message: string): void {
   // 1. Redact connection URLs (e.g. DATABASE_URL that might appear in error messages).
   // 2. Strip newlines and control characters to prevent log injection.
   const safeMessage = sanitizeLogMessage(redactConnectionUrls(message));
 
-  // Pass the message as a binding object so pino serializes it as a JSON
-  // string value — not as a format string. This is the correct pino API for
-  // structured logging and eliminates the log-injection risk.
+  // Pass the message only in the binding object (`messageKey: 'message'`) so
+  // pino serializes it as a JSON string value — never as a format string.
   switch (level) {
     case 'info':
-      rootLogger.info({ msg: safeMessage }, safeMessage);
+      rootLogger.info({ message: safeMessage });
       return;
     case 'warn':
-      rootLogger.warn({ msg: safeMessage }, safeMessage);
+      rootLogger.warn({ message: safeMessage });
       return;
     case 'error':
-      rootLogger.error({ msg: safeMessage }, safeMessage);
+      rootLogger.error({ message: safeMessage });
       return;
     case 'fatal':
-      rootLogger.fatal({ msg: safeMessage }, safeMessage);
+      rootLogger.fatal({ message: safeMessage });
       return;
   }
 }

@@ -8,6 +8,9 @@ import {
   Phone,
   Shield,
   Users,
+  Video,
+  Images,
+  Mic,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -28,6 +31,9 @@ export const ADMIN_NAV_ITEMS = [
   { href: '/admin/hero-stats', label: 'Hero stats', icon: BarChart3 },
   { href: '/admin/contact', label: 'Website contact', icon: Phone },
   { href: '/admin/team', label: 'Team photos', icon: Users },
+  { href: '/admin/facebook-reels', label: 'Facebook reels', icon: Video },
+  { href: '/admin/gallery', label: 'Photo gallery', icon: Images },
+  { href: '/admin/podcasts', label: 'Podcasts & interviews', icon: Mic },
 ] as const satisfies readonly TAdminNavItem[];
 
 export const ADMINS_NAV_ITEM = {

@@ -4,6 +4,7 @@ export type TSocialIcon = 'facebook' | 'instagram' | 'youtube' | 'whatsapp';
 
 type TSocialIconProps = {
   name: TSocialIcon;
+  className?: string;
 };
 
 const SOCIAL_ICON_CLASS =
@@ -16,6 +17,8 @@ const SOCIAL_ICON_MASK = {
   whatsapp: '[mask-image:url(/svg-icon/whatsapp.svg)]',
 } as const satisfies Record<TSocialIcon, string>;
 
-export function SocialIcon({ name }: Readonly<TSocialIconProps>) {
-  return <span aria-hidden="true" className={cn(SOCIAL_ICON_CLASS, SOCIAL_ICON_MASK[name])} />;
+export function SocialIcon({ name, className }: Readonly<TSocialIconProps>) {
+  return (
+    <span aria-hidden="true" className={cn(SOCIAL_ICON_CLASS, SOCIAL_ICON_MASK[name], className)} />
+  );
 }

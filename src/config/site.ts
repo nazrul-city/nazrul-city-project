@@ -27,5 +27,6 @@ export const PUBLIC_NAV_ITEMS = [
   { label: 'সেবাসমূহ', href: '#services' },
   { label: 'প্লট', href: '/plots' },
   { label: 'ফ্ল্যাট', href: '/flats' },
+  { label: 'মিডিয়া', href: '/media' },
   { label: 'কাজের পদ্ধতি', href: '#how-we-work' },
 ] as const;

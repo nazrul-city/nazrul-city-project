@@ -131,7 +131,7 @@ export function Marquee({
 
   return (
     <div
-      className={cn('group w-full overflow-hidden', className)}
+      className={cn('group/marquee w-full overflow-hidden', className)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       aria-hidden="true"
@@ -141,7 +141,7 @@ export function Marquee({
         className={cn(
           'flex w-max',
           direction === 'ltr' ? 'animate-marquee-reverse' : 'animate-marquee',
-          pauseOnHover && 'group-hover:paused hover:paused'
+          pauseOnHover && 'group-hover/marquee:paused hover:paused'
         )}
         style={
           initialDuration ? ({ animationDuration: initialDuration } as CSSProperties) : undefined

@@ -177,3 +177,63 @@ model SiteContact {
 
   @@map("site_contacts")
 }
+
+// Top Facebook Reels on the Media page. Max 5 rows enforced in app code.
+model FacebookReel {
+  id           String   @id @default(uuid())
+  videoUrl     String   @map("video_url") @db.VarChar(2000)
+  thumbnailUrl String   @map("thumbnail_url") @db.VarChar(2000)
+  views        String   @db.VarChar(6)
+  duration     String   @db.VarChar(10)
+  caption      String   @default("") @db.VarChar(200)
+  priority     Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([priority])
+  @@map("facebook_reels")
+}
+
+enum GalleryCategory {
+  PROJECT_VISIT
+  REGISTRATION
+  BOOKING
+  CUSTOMER_MOMENTS
+  PROJECT_ACTIVITIES
+  CORPORATE
+}
+
+// Photo gallery for the Media page and dedicated gallery page.
+model GalleryPhoto {
+  id        String          @id @default(uuid())
+  title     String          @db.VarChar(200)
+  dateTaken String          @default("") @map("date_taken") @db.VarChar(50)
+  category  GalleryCategory
+  imageUrl  String          @map("image_url") @db.VarChar(2000)
+  createdAt DateTime        @default(now()) @map("created_at")
+  updatedAt DateTime        @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@index([createdAt])
+  @@map("gallery_photos")
+}
+
+// Client podcasts and video interviews on the Media page. Max 10 published shown publicly.
+model Podcast {
+  id                String   @id @default(uuid())
+  title             String   @db.VarChar(200)
+  youtubeUrl        String   @map("youtube_url") @db.VarChar(2000)
+  thumbnailUrl      String   @map("thumbnail_url") @db.VarChar(2000)
+  duration          String   @db.VarChar(20)
+  orderPos          Int      @default(0) @map("order_pos")
+  published         Boolean  @default(true)
+  clientName        String?  @default("") @map("client_name") @db.VarChar(120)
+  clientDesignation String?  @default("") @map("client_designation") @db.VarChar(120)
+  projectName       String?  @default("") @map("project_name") @db.VarChar(120)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@index([orderPos])
+  @@index([published])
+  @@map("podcasts")
+}
