@@ -15,7 +15,35 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { deleteFacebookReelAction } from '@/features/media/actions';
+import { FACEBOOK_REEL_URL_REGEX } from '@/features/media/schemas/facebook-reel-schema';
 import type { TFacebookReel } from '@/features/media/types/facebook-reel';
+
+const ALLOWED_FACEBOOK_HOSTS = [
+  'facebook.com',
+  'www.facebook.com',
+  'web.facebook.com',
+  'm.facebook.com',
+  'fb.watch',
+] as const;
+
+function getSafeFacebookReelHref(rawUrl: string): string | null {
+  if (!FACEBOOK_REEL_URL_REGEX.test(rawUrl)) {
+    return null;
+  }
+
+  try {
+    const parsed = new URL(rawUrl);
+    const matchedHost = ALLOWED_FACEBOOK_HOSTS.find((host) => host === parsed.hostname);
+
+    if (parsed.protocol !== 'https:' || !matchedHost) {
+      return null;
+    }
+
+    return `https://${matchedHost}${parsed.pathname}${parsed.search}`;
+  } catch {
+    return null;
+  }
+}
 
 type TReelAdminRowProps = {
   reel: TFacebookReel;
@@ -39,6 +67,7 @@ export function ReelAdminRow({
 
   const isFirst = index === 0;
   const isLast = index === total - 1;
+  const safeVideoUrl = getSafeFacebookReelHref(reel.videoUrl);
 
   async function handleDelete() {
     setIsDeleting(true);
@@ -107,15 +136,17 @@ export function ReelAdminRow({
             </span>
           </div>
 
-          <a
-            href={reel.videoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex max-w-[200px] items-center gap-1 truncate text-xs text-muted-foreground hover:text-foreground sm:max-w-xs"
-          >
-            <span className="truncate">{reel.videoUrl}</span>
-            <ExternalLink className="size-3 shrink-0" aria-hidden="true" />
-          </a>
+          {safeVideoUrl ? (
+            <a
+              href={safeVideoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex max-w-[200px] items-center gap-1 truncate text-xs text-muted-foreground hover:text-foreground sm:max-w-xs"
+            >
+              <span className="truncate">{reel.videoUrl}</span>
+              <ExternalLink className="size-3 shrink-0" aria-hidden="true" />
+            </a>
+          ) : null}
 
           {errorMessage ? <p className="text-xs text-destructive">{errorMessage}</p> : null}
         </div>

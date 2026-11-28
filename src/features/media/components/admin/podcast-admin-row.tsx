@@ -20,6 +20,7 @@ import { deletePodcastAction, togglePodcastVisibilityAction } from '@/features/m
 import { MAX_PUBLISHED_PODCASTS } from '@/features/media/constants/podcasts';
 import type { TPodcast } from '@/features/media/types/podcast';
 import { useMounted } from '@/hooks';
+import { readYoutubeVideoId } from '@/utils/project-listing-fields';
 
 type TPodcastAdminRowProps = {
   podcast: TPodcast;
@@ -51,6 +52,10 @@ export function PodcastAdminRow({
 
   const isFirst = index === 0;
   const isLast = index === total - 1;
+  const youtubeVideoId = readYoutubeVideoId(podcast.youtubeUrl);
+  const safeYoutubeUrl = youtubeVideoId
+    ? `https://www.youtube.com/watch?v=${encodeURIComponent(youtubeVideoId)}`
+    : null;
 
   async function handleToggleVisibility() {
     if (!podcast.published && publishedCount >= MAX_PUBLISHED_PODCASTS) {
@@ -171,14 +176,16 @@ export function PodcastAdminRow({
               {podcast.title}
             </h3>
 
-            <a
-              href={podcast.youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-            >
-              ইউটিউব ভিডিও <ExternalLink className="size-3" />
-            </a>
+            {safeYoutubeUrl ? (
+              <a
+                href={safeYoutubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+              >
+                ইউটিউব ভিডিও <ExternalLink className="size-3" />
+              </a>
+            ) : null}
 
             {errorMessage ? <p className="text-xs text-destructive">{errorMessage}</p> : null}
           </div>

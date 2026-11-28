@@ -18,6 +18,24 @@ import { uploadPodcastThumbnailToCloudinary } from '@/features/media/utils/uploa
 import { useMounted } from '@/hooks';
 import { canUploadProjectImages, isProjectImageFile } from '@/utils/project-image-url';
 
+function getSafeThumbnailSrc(rawUrl: string): string | null {
+  try {
+    const parsed = new URL(rawUrl);
+
+    if (parsed.protocol === 'https:') {
+      return `https://${parsed.host}${parsed.pathname}${parsed.search}`;
+    }
+
+    if (parsed.protocol === 'blob:' && parsed.origin !== 'null') {
+      return `blob:${parsed.origin}${parsed.pathname}`;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 type TEditPodcastDialogProps = {
   podcast: TPodcast;
   publishedCount: number;
@@ -73,6 +91,8 @@ export function EditPodcastDialog({
   if (!isMounted) {
     return null;
   }
+
+  const safeThumbnailSrc = getSafeThumbnailSrc(thumbnailPreview || podcast.thumbnailUrl);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -290,12 +310,14 @@ export function EditPodcastDialog({
                     className="file:mr-4 file:rounded-xl file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-primary hover:file:bg-primary/20"
                   />
                   <div className="relative aspect-video w-32 overflow-hidden rounded-xl border border-border bg-muted">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={thumbnailPreview || podcast.thumbnailUrl}
-                      alt="Thumbnail Preview"
-                      className="size-full object-cover"
-                    />
+                    {safeThumbnailSrc ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={safeThumbnailSrc}
+                        alt="Thumbnail Preview"
+                        className="size-full object-cover"
+                      />
+                    ) : null}
                   </div>
                 </div>
                 {thumbnailError ? (

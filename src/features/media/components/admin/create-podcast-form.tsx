@@ -19,6 +19,24 @@ import { useMounted } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { canUploadProjectImages, isProjectImageFile } from '@/utils/project-image-url';
 
+function getSafeThumbnailSrc(rawUrl: string): string | null {
+  try {
+    const parsed = new URL(rawUrl);
+
+    if (parsed.protocol === 'https:') {
+      return `https://${parsed.host}${parsed.pathname}${parsed.search}`;
+    }
+
+    if (parsed.protocol === 'blob:' && parsed.origin !== 'null') {
+      return `blob:${parsed.origin}${parsed.pathname}`;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 type TPodcastFormFieldProps = {
   id: string;
   label: string;
@@ -108,6 +126,7 @@ export function CreatePodcastForm({
     defaultValue: !isAtPublishedLimit,
   });
   const uploadReady = canUploadProjectImages();
+  const safeThumbnailPreview = thumbnailPreview ? getSafeThumbnailSrc(thumbnailPreview) : null;
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -319,10 +338,14 @@ export function CreatePodcastForm({
                 onChange={handleFileChange}
                 className="file:mr-4 file:rounded-xl file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-primary hover:file:bg-primary/20"
               />
-              {thumbnailPreview ? (
+              {safeThumbnailPreview ? (
                 <div className="relative aspect-video w-36 overflow-hidden rounded-xl border border-border bg-muted">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={thumbnailPreview} alt="Preview" className="size-full object-cover" />
+                  <img
+                    src={safeThumbnailPreview}
+                    alt="Preview"
+                    className="size-full object-cover"
+                  />
                 </div>
               ) : null}
             </div>
