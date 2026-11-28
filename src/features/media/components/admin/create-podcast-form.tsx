@@ -2,6 +2,7 @@
 
 import { useRef, useState, type ChangeEvent } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, ImagePlus, Loader2 } from 'lucide-react';
 import { useForm, useWatch, type UseFormRegisterReturn } from 'react-hook-form';
@@ -340,11 +341,13 @@ export function CreatePodcastForm({
               />
               {safeThumbnailPreview ? (
                 <div className="relative aspect-video w-36 overflow-hidden rounded-xl border border-border bg-muted">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={safeThumbnailPreview}
                     alt="Preview"
-                    className="size-full object-cover"
+                    fill
+                    unoptimized
+                    sizes="144px"
+                    className="object-cover"
                   />
                 </div>
               ) : null}

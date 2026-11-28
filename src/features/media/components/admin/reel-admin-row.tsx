@@ -39,7 +39,20 @@ function getSafeFacebookReelHref(rawUrl: string): string | null {
       return null;
     }
 
-    return `https://${matchedHost}${parsed.pathname}${parsed.search}`;
+    const encodedPath = parsed.pathname
+      .split('/')
+      .filter((segment) => segment.length > 0)
+      .map((segment) => encodeURIComponent(segment))
+      .join('/');
+
+    const searchEntries = Array.from(parsed.searchParams.entries()).map(
+      ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    );
+
+    const pathPart = encodedPath.length > 0 ? `/${encodedPath}` : '';
+    const queryPart = searchEntries.length > 0 ? `?${searchEntries.join('&')}` : '';
+
+    return `https://${matchedHost}${pathPart}${queryPart}`;
   } catch {
     return null;
   }

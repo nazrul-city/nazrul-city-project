@@ -2,6 +2,7 @@
 
 import { useRef, useState, type ChangeEvent } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, Loader2, X } from 'lucide-react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -311,11 +312,13 @@ export function EditPodcastDialog({
                   />
                   <div className="relative aspect-video w-32 overflow-hidden rounded-xl border border-border bg-muted">
                     {safeThumbnailSrc ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
+                      <Image
                         src={safeThumbnailSrc}
                         alt="Thumbnail Preview"
-                        className="size-full object-cover"
+                        fill
+                        unoptimized
+                        sizes="128px"
+                        className="object-cover"
                       />
                     ) : null}
                   </div>
